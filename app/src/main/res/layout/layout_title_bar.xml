@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:background="@color/primary"
+    android:elevation="4dp">
+
+    <!-- 返回按钮 -->
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_menu_revert"
+        android:clickable="true"/>
+
+    <!-- 标题 -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="标题"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+    <!-- 设置按钮 -->
+    <!-- 设置按钮 -->
+    <ImageView
+        android:id="@+id/iv_setting"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/bg25"
+        android:contentDescription="设置"
+        android:clickable="true"
+        android:focusable="true"/>
+    <!-- 在合适的位置添加流式聊天按钮 -->
+
+</LinearLayout>

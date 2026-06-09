@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#6200EE</color>
+    <color name="primary_dark">#3700B3</color>
+    <color name="accent">#03DAC5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray_400">#9E9E9E</color>
+    <color name="black">#000000</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_200">#EEEEEE</color>
+    <color name="red">#FF4444</color>
+    <color name="green">#00C851</color>
+    <color name="orange">#FF8800</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <!-- 浅灰背景 -->
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_300">#E0E0E0</color>
+    <!-- 图标/按钮蓝色 -->
+    <color name="blue_500">#2196F3</color>
+    <color name="blue_700">#1976D2</color>
+    <!-- 半透明黑色（50%透明度） -->
+    <!-- 退出登录红色 -->
+    <color name="red_500">#FF3B30</color>
+    <color name="nav_blue">#2196F3</color>
+    <!-- 其他页面导航栏颜色 -->
+    <color name="nav_normal">#FFFFFF</color>
+</resources>

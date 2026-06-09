@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 标题栏（返回+标题+创建订单+设置按钮） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/blue_700"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:orientation="horizontal">
+
+        <!-- 返回按钮 -->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bg17"
+            android:contentDescription="返回"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- 标题文字 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="我的订单"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+        <!-- 创建订单按钮 -->
+        <TextView
+            android:id="@+id/tv_create_order"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/shape_create_order_btn"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:text="创建订单"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="center_vertical"/>
+
+        <!-- 设置按钮 -->
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bg25"
+            android:contentDescription="设置"
+            android:clickable="true"
+            android:focusable="true"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <!-- 订单状态筛选 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_all"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="全部订单"
+            android:textSize="14sp"
+            android:textColor="@color/primary"
+            android:gravity="center"
+            android:background="@drawable/shape_edittext"/>
+
+        <TextView
+            android:id="@+id/tv_unpaid"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="待付款"
+            android:textSize="14sp"
+            android:textColor="@color/gray_400"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_unshipped"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="待发货"
+            android:textSize="14sp"
+            android:textColor="@color/gray_400"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_completed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="已完成"
+            android:textSize="14sp"
+            android:textColor="@color/gray_400"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- 订单列表（可滚动） -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"> <!-- 新增：确保ScrollView填满剩余空间 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- 订单项1（核心：补充通用ID，匹配代码中的变量名） -->
+            <LinearLayout
+                android:id="@+id/order_item_1"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/shape_edittext"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/bg24"
+                    android:scaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp">
+
+                    <!-- 订单名称（核心ID：tv_order_name1，匹配代码） -->
+                    <TextView
+                        android:id="@+id/tv_order_name1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="外贸服务订单-20251213"
+                        android:textSize="16sp"
+                        android:maxLines="2"
+                        android:ellipsize="end"/>
+
+                    <!-- 快递单号（核心ID：tv_order_no1，匹配代码） -->
+                    <TextView
+                        android:id="@+id/tv_order_no1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="快递单号：9418368276452"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_600"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="bottom">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="¥999.00"
+                            android:textSize="16sp"
+                            android:textColor="@color/red"/>
+
+                        <!-- 订单状态（核心ID：tv_order_status1，匹配代码） -->
+                        <TextView
+                            android:id="@+id/tv_order_status1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已完成"
+                            android:textSize="14sp"
+                            android:textColor="@color/green"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 订单项2（核心：补充通用ID） -->
+            <LinearLayout
+                android:id="@+id/order_item_2"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/shape_edittext"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/bg24"
+                    android:scaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp">
+
+                    <!-- 订单名称（核心ID：tv_order_name2） -->
+                    <TextView
+                        android:id="@+id/tv_order_name2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="物流服务订单-20251210"
+                        android:textSize="16sp"
+                        android:maxLines="2"
+                        android:ellipsize="end"/>
+
+                    <!-- 快递单号（核心ID：tv_order_no2） -->
+                    <TextView
+                        android:id="@+id/tv_order_no2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="快递单号：9876543210987"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_600"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="bottom">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="¥1299.00"
+                            android:textSize="16sp"
+                            android:textColor="@color/red"/>
+
+                        <!-- 订单状态（核心ID：tv_order_status2） -->
+                        <TextView
+                            android:id="@+id/tv_order_status2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="待发货"
+                            android:textSize="14sp"
+                            android:textColor="@color/orange"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 订单项3（新增：占位，用于显示新创建的订单） -->
+            <LinearLayout
+                android:id="@+id/order_item_3"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/shape_edittext"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"> <!-- 默认隐藏，创建订单后显示 -->
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/bg24"
+                    android:scaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp">
+
+                    <!-- 订单名称（核心ID：tv_order_name3） -->
+                    <TextView
+                        android:id="@+id/tv_order_name3"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:maxLines="2"
+                        android:ellipsize="end"/>
+
+                    <!-- 快递单号（核心ID：tv_order_no3） -->
+                    <TextView
+                        android:id="@+id/tv_order_no3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_600"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="bottom">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="¥0.00"
+                            android:textSize="16sp"
+                            android:textColor="@color/red"/>
+
+                        <!-- 订单状态（核心ID：tv_order_status3） -->
+                        <TextView
+                            android:id="@+id/tv_order_status3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="14sp"
+                            android:textColor="@color/orange"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

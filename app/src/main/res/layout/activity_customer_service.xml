@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_100">
+
+    <!-- 标题栏（返回+标题+设置） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/blue_700"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="智能客服"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+        <!-- 设置按钮 -->
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bg25"
+            android:contentDescription="设置"
+            android:clickable="true"
+            android:focusable="true"/>
+        <!-- 在合适的位置添加流式聊天按钮 -->
+
+    </LinearLayout>
+
+    <!-- activity_customer_service.xml - 修改聊天列表部分 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fadeScrollbars="false"
+        android:requiresFadingEdge="none"
+        android:scrollbars="vertical"
+        android:overScrollMode="never"
+        android:scrollbarStyle="insideOverlay"/>
+
+    <!-- 快捷问题栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="如何计算报关费用？"
+            android:textSize="14sp"
+            android:textColor="@color/blue_500"
+            android:background="@drawable/shape_chat_tag"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="集装箱尺寸规格"
+            android:textSize="14sp"
+            android:textColor="@color/blue_500"
+            android:background="@drawable/shape_chat_tag"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_contract"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="合同范本下载"
+            android:textSize="14sp"
+            android:textColor="@color/blue_500"
+            android:background="@drawable/shape_chat_tag"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"/>
+    </LinearLayout>
+
+    <!-- 输入区 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:hint="输入您的问题..."
+            android:background="@drawable/shape_edittext_round"
+            android:paddingHorizontal="16dp"
+            android:singleLine="true"/>
+
+        <ImageView
+            android:id="@+id/iv_send"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/bg18"
+            android:background="@drawable/shape_circle_blue"
+            android:padding="8dp"
+            android:layout_marginStart="12dp"
+            android:contentDescription="发送"/>
+    </LinearLayout>
+
+    <!-- 底部导航 -->
+    <include layout="@layout/layout_bottom_nav"/>
+</LinearLayout>

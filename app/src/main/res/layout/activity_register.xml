@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingHorizontal="32dp"
+    android:background="@color/white">
+
+    <!-- Logo -->
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/bg2"
+        android:contentDescription="logo"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- 标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="账号注册"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- 副标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="创建新账户，开启专属服务"
+        android:textSize="14sp"
+        android:textColor="@color/gray_600"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- 账号输入框 -->
+    <EditText
+        android:id="@+id/et_account"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="请输入账号"
+        android:background="@drawable/shape_edittext"
+        android:paddingHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:inputType="text"/>
+    <!-- 邮箱输入框 -->
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="邮箱"
+        android:background="@drawable/shape_edittext"
+        android:paddingHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:inputType="textEmailAddress"/>
+
+    <!-- 密码输入框（带可见/隐藏切换） -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp">
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:background="@drawable/shape_edittext"
+            android:paddingHorizontal="16dp"/>
+
+        <!-- 密码可见/隐藏切换按钮 -->
+        <ImageView
+            android:id="@+id/iv_pwd_eye"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_view"
+            android:contentDescription="切换密码可见性"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:clickable="true"/>
+    </RelativeLayout>
+
+    <!-- 确认密码输入框（带可见/隐藏切换） -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp">
+
+        <EditText
+            android:id="@+id/et_pwd_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请确认密码"
+            android:inputType="textPassword"
+            android:background="@drawable/shape_edittext"
+            android:paddingHorizontal="16dp"/>
+
+        <!-- 确认密码可见/隐藏切换按钮 -->
+        <ImageView
+            android:id="@+id/iv_pwd_confirm_eye"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_view"
+            android:contentDescription="切换密码可见性"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:clickable="true"/>
+    </RelativeLayout>
+
+    <!-- 注册按钮 -->
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="完成注册"
+        android:textColor="@color/white"
+        android:background="@color/blue_500"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- 登录入口 -->
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已有账户？立即登录"
+        android:textSize="14sp"
+        android:textColor="@color/blue_500"
+        android:clickable="true"/>
+
+</LinearLayout>

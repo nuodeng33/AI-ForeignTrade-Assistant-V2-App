@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 服务（对应图2第一个选项） -->
+    <item
+        android:id="@+id/nav_service"
+        android:icon="@drawable/bg9"
+        android:title="服务"/>
+
+    <!-- 客服（对应图2第二个选项） -->
+    <item
+        android:id="@+id/nav_customer"
+        android:icon="@drawable/bg16"
+        android:title="客服"/>
+
+    <!-- 联系（对应图2第三个选项） -->
+    <item
+        android:id="@+id/nav_contact"
+        android:icon="@drawable/bg11"
+        android:title="联系"/>
+
+    <!-- 我的（对应图2第四个选项） -->
+    <item
+        android:id="@+id/nav_mine"
+        android:icon="@drawable/bg12"
+        android:title="我的"/>
+</menu>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_service_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/gray_100">
+
+    <!-- 标题栏（匹配图一：左上角菜单+标题+右上角设置） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/blue_700"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+
+        <!-- 标题文字（图一“我们的服务”） -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="我们的服务"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+        <!-- 右上角设置按钮（图一的齿轮） -->
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bg25"
+            android:contentDescription="设置"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+
+    <!-- 服务内容区（匹配图一的卡片样式） -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white_80"
+            android:padding="8dp">
+
+            <!-- 服务卡片1：市场调研与分析 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:radius="8dp"
+                android:layout_marginBottom="16dp">
+
+                <!-- 图标+标题 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/bg13"
+                        android:padding="8dp"
+                        android:scaleType="centerCrop" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="市场调研与分析"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="16dp"/>
+                </LinearLayout>
+
+                <!-- 描述 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="全球市场深度调研，竞争对手分析，目标市场定位"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray_600"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="56dp"/>
+
+                <!-- 查看详情按钮 -->
+                <TextView
+                    android:id="@+id/tv_market_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看详情 >"
+                    android:textSize="14sp"
+                    android:textColor="@color/blue_500"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="56dp"
+                    android:clickable="true"/>
+            </LinearLayout>
+
+            <!-- 服务卡片2：报关与清关服务 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:radius="8dp"
+                android:layout_marginBottom="16dp">
+
+                <!-- 图标+标题 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/bg14"
+                        android:padding="8dp"
+                        android:scaleType="centerCrop" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="报关与清关服务"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="16dp"/>
+                </LinearLayout>
+
+                <!-- 描述 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="出口通关，进口清关，单证准备，全流程专业处理"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray_600"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="56dp"/>
+
+                <!-- 立即咨询按钮 -->
+                <TextView
+                    android:id="@+id/tv_customs_consult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="立即咨询 >"
+                    android:textSize="14sp"
+                    android:textColor="@color/blue_500"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="56dp"
+                    android:clickable="true"/>
+            </LinearLayout>
+
+            <!-- 服务卡片3：物流解决方案（新增独立ID） -->
+            <LinearLayout
+                android:id="@+id/ll_logistics_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:radius="8dp"
+                android:layout_marginBottom="16dp">
+
+                <!-- 图标+标题 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/bg15"
+                        android:padding="8dp"
+                        android:scaleType="centerCrop" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="物流解决方案"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="16dp"/>
+                </LinearLayout>
+
+                <!-- 描述 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="全球海运、空运、陆运解决方案，门到门服务"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray_600"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="56dp"/>
+
+                <!-- 查看详情按钮 -->
+                <TextView
+                    android:id="@+id/tv_logistics_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看详情 >"
+                    android:textSize="14sp"
+                    android:textColor="@color/blue_500"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="56dp"
+                    android:clickable="true"/>
+            </LinearLayout>
+
+            <!-- 服务卡片4：法律咨询 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:radius="8dp"
+                android:layout_marginBottom="16dp">
+
+                <!-- 图标+标题 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/bg27"
+                        android:padding="8dp"
+                        android:scaleType="centerCrop" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="外贸法律咨询"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="16dp"/>
+                </LinearLayout>
+
+                <!-- 描述 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="外贸合同审核，国际贸易法规解读，纠纷处理咨询"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray_600"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="56dp"/>
+
+                <!-- 在线咨询按钮 -->
+                <TextView
+                    android:id="@+id/tv_law_consult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="在线咨询 >"
+                    android:textSize="14sp"
+                    android:textColor="@color/blue_500"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="56dp"
+                    android:clickable="true"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 底部导航栏 -->
+    <include layout="@layout/layout_bottom_nav"/>
+
+</LinearLayout>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bnv_main"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:paddingHorizontal="16dp">
+
+    <!-- 服务 -->
+    <LinearLayout
+        android:id="@+id/nav_service"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/iv_service"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bg9"
+            android:contentDescription="服务"/>
+        <TextView
+            android:id="@+id/tv_nav_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务"
+            android:textSize="12sp"
+            android:textColor="@color/gray_600"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- 客服 -->
+    <LinearLayout
+        android:id="@+id/nav_customer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/iv_customer_service"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bg16"
+            android:contentDescription="客服"/>
+        <TextView
+            android:id="@+id/tv_nav_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客服"
+            android:textSize="12sp"
+            android:textColor="@color/gray_600"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- 联系 -->
+    <LinearLayout
+        android:id="@+id/nav_contact"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/iv_contact"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bg11"
+            android:contentDescription="联系"/>
+        <TextView
+            android:id="@+id/tv_nav_text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系"
+            android:textSize="12sp"
+            android:textColor="@color/gray_600"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- 我的 -->
+    <LinearLayout
+        android:id="@+id/nav_mine"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/iv_mine"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bg12"
+            android:contentDescription="我的"/>
+        <TextView
+            android:id="@+id/tv_nav_text4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的"
+            android:textSize="12sp"
+            android:textColor="@color/gray_600"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+</LinearLayout>

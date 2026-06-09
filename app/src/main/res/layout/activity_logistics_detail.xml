@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <!-- 标题栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/blue_700"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+
+        <!-- 返回按钮（已有ID） -->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_revert"
+            android:clickable="true"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="物流配送信息"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- 物流信息卡片 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/gray_100">
+
+        <!-- 订单号（添加ID：tv_order_id） -->
+        <TextView
+            android:id="@+id/tv_order_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="订单号：LOG20251215001"
+            android:textSize="14sp"
+            android:textColor="@color/gray_600"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- 配送时间 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@android:drawable/ic_menu_today"/>
+
+            <!-- 预计配送时间（添加ID：tv_delivery_time） -->
+            <TextView
+                android:id="@+id/tv_delivery_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="预计配送时间：2025-12-18 14:00"
+                android:textSize="16sp"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <!-- 配送路线 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="配送路线："
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- 路线内容（添加ID：tv_delivery_route） -->
+            <TextView
+                android:id="@+id/tv_delivery_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="上海港 → 新加坡港 → 鹿特丹港 → 德国汉堡仓库"
+                android:textSize="14sp"
+                android:textColor="@color/blue_500"
+                android:background="@color/white"
+                android:padding="12dp"
+                android:radius="4dp"/>
+        </LinearLayout>
+
+        <!-- 实时位置 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前位置："
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- 实时位置内容（添加ID：tv_real_time_location） -->
+            <TextView
+                android:id="@+id/tv_real_time_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="新加坡港 装卸中"
+                android:textSize="14sp"
+                android:textColor="@color/blue_700"
+                android:background="@color/white"
+                android:padding="12dp"
+                android:radius="4dp"/>
+        </LinearLayout>
+
+        <!-- 可选：添加刷新按钮（扩展交互） -->
+        <TextView
+            android:id="@+id/tv_refresh_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刷新实时位置"
+            android:textSize="14sp"
+            android:textColor="@color/blue_500"
+            android:layout_gravity="end"
+            android:layout_marginTop="12dp"
+            android:clickable="true"/>
+    </LinearLayout>
+
+</LinearLayout>

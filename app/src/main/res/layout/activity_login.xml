@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingHorizontal="32dp"
+    android:background="@color/white">
+
+    <!-- Logo -->
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/bg2"
+        android:contentDescription="logo"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- 标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="账号登录"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- 副标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="欢迎回来，请登录您的账户"
+        android:textSize="14sp"
+        android:textColor="@color/gray_600"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- 账号输入框 -->
+    <EditText
+        android:id="@+id/et_account"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="账号"
+        android:background="@drawable/shape_edittext"
+        android:paddingHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:inputType="text"/>
+
+    <!-- 密码输入框（带可见/隐藏切换） -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp">
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:background="@drawable/shape_edittext"
+            android:paddingHorizontal="16dp"/>
+
+        <!-- 密码可见/隐藏切换按钮：改用系统图标 -->
+        <ImageView
+            android:id="@+id/iv_pwd_eye"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_view"
+            android:contentDescription="切换密码可见性"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:clickable="true"/>
+    </RelativeLayout>
+
+    <!-- 登录按钮 -->
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="登录账号"
+        android:textColor="@color/white"
+        android:background="#4967c3"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- 注册入口 -->
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="还没有账户？注册新账号"
+        android:textSize="14sp"
+        android:textColor="@color/blue_500"
+        android:clickable="true"/>
+
+</LinearLayout>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_100">
+
+    <!-- 标题栏（修复语法+资源问题） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/blue_700"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+
+        <!-- 返回按钮（修复资源引用+属性） -->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bg17"
+            android:contentDescription="返回"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginRight="16dp"/>
+
+        <!-- 标题文字（修复语法） -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="创建订单"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- 订单表单内容区 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:radius="8dp">
+
+            <!-- 物品信息输入 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="物品信息"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/et_goods_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/shape_edittext"
+                    android:padding="12dp"
+                    android:gravity="top"
+                    android:hint="请输入物品名称、规格、数量等信息"
+                    android:lines="4"
+                    android:focusable="true"/> <!-- 补充：确保可输入 -->
+            </LinearLayout>
+
+            <!-- 订单号输入 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单号"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp"/>
+                <EditText
+                    android:id="@+id/et_order_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/shape_edittext"
+                    android:paddingHorizontal="12dp"
+                    android:hint="系统自动生成（可手动填写）"
+                    android:focusable="true"/> <!-- 补充：确保可输入 -->
+            </LinearLayout>
+
+            <!-- 时间选择 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单时间"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp"/>
+                <TextView
+                    android:id="@+id/tv_order_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/shape_edittext"
+                    android:paddingHorizontal="12dp"
+                    android:gravity="center_vertical"
+                    android:text="点击选择时间"
+                    android:textColor="@color/gray_600"
+                    android:clickable="true"
+                    android:focusable="true"/> <!-- 补充：增强点击响应 -->
+            </LinearLayout>
+
+            <!-- 提交按钮 -->
+            <TextView
+                android:id="@+id/tv_submit_order"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/blue_500"
+                android:text="提交订单"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:radius="8dp"
+                android:clickable="true"
+                android:focusable="true"/> <!-- 补充：增强点击响应 -->
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 底部导航 -->
+    <include layout="@layout/layout_bottom_nav"/>
+</LinearLayout>
