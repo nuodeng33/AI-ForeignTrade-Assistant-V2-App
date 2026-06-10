@@ -8,12 +8,16 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.maolianzhihe.adapter.OrderAdapter
 import com.example.maolianzhihe.model.Order
 import com.example.maolianzhihe.ui.UiState
 import com.example.maolianzhihe.viewmodel.OrderViewModel
@@ -27,16 +31,15 @@ class MyOrderActivity : BaseActivity() {
     private lateinit var tvUnshipped: TextView
     private lateinit var tvCompleted: TextView
     private lateinit var tvCreateOrder: TextView
+    private lateinit var tvOrderEmpty: TextView
     private lateinit var ivBack: ImageView
+    private lateinit var progressOrders: ProgressBar
+    private lateinit var rvOrders: RecyclerView
+    private lateinit var orderAdapter: OrderAdapter
     private lateinit var orderViewModel: OrderViewModel
 
-    private val orderList = mutableListOf<OrderInfo>()
+    private val orderList = mutableListOf<Order>()
     private var selectedTabIndex = 0
-
-    private val orderItemIds = listOf(R.id.order_item_1, R.id.order_item_2, R.id.order_item_3)
-    private val tvOrderNameIds = listOf(R.id.tv_order_name1, R.id.tv_order_name2, R.id.tv_order_name3)
-    private val tvOrderNoIds = listOf(R.id.tv_order_no1, R.id.tv_order_no2, R.id.tv_order_no3)
-    private val tvOrderStatusIds = listOf(R.id.tv_order_status1, R.id.tv_order_status2, R.id.tv_order_status3)
 
     private val requestCodeCreateOrder = 1001
 
@@ -49,9 +52,9 @@ class MyOrderActivity : BaseActivity() {
         initTitleBar("我的订单", showSetting = true, showBack = true)
         initBottomNav(R.id.nav_mine)
         initViews()
+        initOrderList()
         observeOrdersState()
         setClickListeners()
-        bindOrderItemClick()
         initBackPressedCallback()
         orderViewModel.loadOrders()
     }
@@ -63,29 +66,48 @@ class MyOrderActivity : BaseActivity() {
         tvUnpaid = findViewById(R.id.tv_unpaid)
         tvUnshipped = findViewById(R.id.tv_unshipped)
         tvCompleted = findViewById(R.id.tv_completed)
+        tvOrderEmpty = findViewById(R.id.tv_order_empty)
+        progressOrders = findViewById(R.id.progress_orders)
+        rvOrders = findViewById(R.id.rv_orders)
+    }
+
+    private fun initOrderList() {
+        orderAdapter = OrderAdapter { order ->
+            showTrackingOptions(order)
+        }
+        rvOrders.layoutManager = LinearLayoutManager(this)
+        rvOrders.adapter = orderAdapter
     }
 
     private fun observeOrdersState() {
         orderViewModel.ordersState.observe(this) { state ->
             when (state) {
                 UiState.Idle -> Unit
-                UiState.Loading -> Toast.makeText(this, "正在加载订单...", Toast.LENGTH_SHORT).show()
+                UiState.Loading -> showLoadingState()
                 is UiState.Success -> {
+                    progressOrders.visibility = View.GONE
                     orderList.clear()
-                    orderList.addAll(state.data.map { it.toOrderInfo() })
+                    orderList.addAll(state.data)
                     refreshOrderListUI()
                 }
                 is UiState.Empty -> {
+                    progressOrders.visibility = View.GONE
                     orderList.clear()
-                    refreshOrderListUI()
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    refreshOrderListUI(state.message)
                 }
                 is UiState.Error -> {
+                    progressOrders.visibility = View.GONE
                     Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
                     loadDefaultOrders()
                 }
             }
         }
+    }
+
+    private fun showLoadingState() {
+        progressOrders.visibility = View.VISIBLE
+        tvOrderEmpty.visibility = View.GONE
+        rvOrders.visibility = View.VISIBLE
     }
 
     private fun setClickListeners() {
@@ -116,51 +138,36 @@ class MyOrderActivity : BaseActivity() {
         orderList.clear()
         orderList.addAll(
             listOf(
-                OrderInfo("ORDER001", "跨境物流包裹", "9418368276452", "待发货", getCurrentTime()),
-                OrderInfo("ORDER002", "外贸样品快递", "9876543210987", "运输中", getCurrentTime()),
-                OrderInfo("ORDER003", "清关文件快递", "1234567890123", "已完成", getCurrentTime())
+                Order(-1, "9418368276452", "跨境物流包裹", "待发货", getCurrentTime()),
+                Order(-2, "9876543210987", "外贸样品快递", "运输中", getCurrentTime()),
+                Order(-3, "1234567890123", "清关文件快递", "已完成", getCurrentTime()),
+                Order(-4, "202606100001", "海外仓补货订单", "待付款", getCurrentTime())
             )
         )
         refreshOrderListUI()
     }
 
-    private fun refreshOrderListUI() {
-        val displayOrders = filteredOrders().take(3)
-        for (i in orderItemIds.indices) {
-            if (i < displayOrders.size) {
-                val order = displayOrders[i]
-                findViewById<TextView>(tvOrderNameIds[i])?.text = order.orderName
-                findViewById<TextView>(tvOrderNoIds[i])?.text = "单号：${order.trackingNumber}"
-                findViewById<TextView>(tvOrderStatusIds[i])?.text = order.orderStatus
-                findViewById<View>(orderItemIds[i])?.visibility = View.VISIBLE
-            } else {
-                findViewById<View>(orderItemIds[i])?.visibility = View.GONE
-            }
-        }
+    private fun refreshOrderListUI(emptyMessage: String = "暂无订单") {
+        val displayOrders = filteredOrders()
+        orderAdapter.submitList(displayOrders)
+        val isEmpty = displayOrders.isEmpty()
+        rvOrders.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        tvOrderEmpty.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        tvOrderEmpty.text = emptyMessage
     }
 
-    private fun filteredOrders(): List<OrderInfo> {
+    private fun filteredOrders(): List<Order> {
         return when (selectedTabIndex) {
-            1 -> orderList.filter { it.orderStatus.contains("待付") || it.orderStatus.contains("未付") }
-            2 -> orderList.filter { it.orderStatus.contains("待发") }
-            3 -> orderList.filter { it.orderStatus.contains("完成") }
-            else -> orderList
+            1 -> orderList.filter { it.status.contains("待付") || it.status.contains("未付") }
+            2 -> orderList.filter { it.status.contains("待发") }
+            3 -> orderList.filter { it.status.contains("完成") }
+            else -> orderList.toList()
         }
     }
 
-    private fun bindOrderItemClick() {
-        orderItemIds.forEachIndexed { index, itemId ->
-            findViewById<View>(itemId)?.setOnClickListener {
-                val displayOrders = filteredOrders()
-                if (index < displayOrders.size) {
-                    val order = displayOrders[index]
-                    showTrackingOptions(order.trackingNumber, order.orderName)
-                }
-            }
-        }
-    }
-
-    private fun showTrackingOptions(trackingNumber: String, orderName: String) {
+    private fun showTrackingOptions(order: Order) {
+        val trackingNumber = order.orderNumber
+        val orderName = order.goodsInfo.ifBlank { "订单详情" }
         try {
             copyToClipboard("快递单号", trackingNumber)
             val options = arrayOf("在邮政官网查询", "在菜鸟裹裹查询", "分享快递单号", "查看订单详情")
@@ -173,7 +180,7 @@ class MyOrderActivity : BaseActivity() {
                         0 -> openPostalTracking(trackingNumber)
                         1 -> openCainiaoTracking(trackingNumber)
                         2 -> shareTrackingNumber(trackingNumber, orderName)
-                        3 -> showOrderDetails(trackingNumber, orderName)
+                        3 -> showOrderDetails(order)
                     }
                 }
                 .setNegativeButton("取消", null)
@@ -221,18 +228,13 @@ class MyOrderActivity : BaseActivity() {
         startActivity(intent)
     }
 
-    private fun showOrderDetails(trackingNumber: String, orderName: String) {
-        val order = orderList.find { it.trackingNumber == trackingNumber }
-        val details = if (order != null) {
-            "订单名称：${order.orderName}\n快递单号：${order.trackingNumber}\n订单状态：${order.orderStatus}\n创建时间：${order.createTime}"
-        } else {
-            "订单信息：$orderName\n快递单号：$trackingNumber"
-        }
+    private fun showOrderDetails(order: Order) {
+        val details = "订单名称：${order.goodsInfo}\n快递单号：${order.orderNumber}\n订单状态：${order.status}\n创建时间：${order.createdAt}"
         AlertDialog.Builder(this)
             .setTitle("订单详情")
             .setMessage(details)
             .setPositiveButton("关闭", null)
-            .setNeutralButton("复制单号") { _, _ -> copyToClipboard("快递单号", trackingNumber) }
+            .setNeutralButton("复制单号") { _, _ -> copyToClipboard("快递单号", order.orderNumber) }
             .show()
     }
 
@@ -272,7 +274,7 @@ class MyOrderActivity : BaseActivity() {
             2 -> updateTabStyle(tvUnshipped)
             3 -> updateTabStyle(tvCompleted)
         }
-        refreshOrderListUI()
+        refreshOrderListUI("当前筛选下暂无订单")
     }
 
     private fun updateTabStyle(tv: TextView) {
@@ -292,22 +294,4 @@ class MyOrderActivity : BaseActivity() {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA)
         return sdf.format(Date())
     }
-
-    private fun Order.toOrderInfo(): OrderInfo {
-        return OrderInfo(
-            orderId = id.toString(),
-            orderName = goodsInfo,
-            trackingNumber = orderNumber,
-            orderStatus = status,
-            createTime = createdAt
-        )
-    }
-
-    private data class OrderInfo(
-        val orderId: String,
-        val orderName: String,
-        val trackingNumber: String,
-        val orderStatus: String,
-        val createTime: String
-    )
 }
