@@ -9,9 +9,12 @@ import com.example.maolianzhihe.model.AuthResponse
 object SessionManager {
     private const val PREF_NAME = "user_info"
     private lateinit var preferences: SharedPreferences
+    private lateinit var legacyPreferences: SharedPreferences
 
     fun init(context: Context) {
-        preferences = createSecurePreferences(context.applicationContext)
+        val appContext = context.applicationContext
+        legacyPreferences = appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        preferences = createSecurePreferences(appContext)
     }
 
     private fun createSecurePreferences(context: Context): SharedPreferences {
@@ -28,18 +31,34 @@ object SessionManager {
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )
         } catch (_: Exception) {
-            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+            legacyPreferences
         }
     }
 
-    fun isLoggedIn(): Boolean = preferences.getBoolean("isLoggedIn", false)
+    fun isLoggedIn(): Boolean {
+        return preferences.getBoolean("isLoggedIn", false) || legacyPreferences.getBoolean("isLoggedIn", false)
+    }
 
-    fun token(): String? = preferences.getString("token", null)?.takeIf { it.isNotBlank() }
+    fun token(): String? {
+        return preferences.getString("token", null)?.takeIf { it.isNotBlank() }
+            ?: legacyPreferences.getString("token", null)?.takeIf { it.isNotBlank() }
+    }
 
-    fun username(): String = preferences.getString("username", "unknown") ?: "unknown"
+    fun username(): String {
+        return preferences.getString("username", null)
+            ?: legacyPreferences.getString("username", null)
+            ?: "unknown"
+    }
 
     fun save(authResponse: AuthResponse) {
-        preferences.edit()
+        writeSession(preferences, authResponse)
+        if (preferences !== legacyPreferences) {
+            writeSession(legacyPreferences, authResponse)
+        }
+    }
+
+    private fun writeSession(target: SharedPreferences, authResponse: AuthResponse) {
+        target.edit()
             .putString("token", authResponse.jwt)
             .putInt("userId", authResponse.user.id)
             .putString("username", authResponse.user.username)
@@ -50,5 +69,8 @@ object SessionManager {
 
     fun clear() {
         preferences.edit().clear().apply()
+        if (preferences !== legacyPreferences) {
+            legacyPreferences.edit().clear().apply()
+        }
     }
 }
