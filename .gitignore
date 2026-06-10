@@ -13,3 +13,13 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Strapi Backend
+backend/node_modules/
+backend/.env
+backend/.cache/
+backend/build/
+backend/dist/
+backend/.tmp/
+backend/public/uploads/
+.idea/
