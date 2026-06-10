@@ -11,15 +11,43 @@ android {
         applicationId = "com.example.maolianzhihe"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "3.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["usesCleartextTraffic"] = "true"
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            manifestPlaceholders["usesCleartextTraffic"] = "true"
+            buildConfigField("String", "API_BASE_URL", "\"http://192.168.1.3:1337/api/\"")
+        }
+        create("qa") {
+            dimension = "environment"
+            applicationIdSuffix = ".qa"
+            versionNameSuffix = "-qa"
+            manifestPlaceholders["usesCleartextTraffic"] = "true"
+            buildConfigField("String", "API_BASE_URL", "\"http://192.168.1.3:1337/api/\"")
+        }
+        create("prod") {
+            dimension = "environment"
+            manifestPlaceholders["usesCleartextTraffic"] = "false"
+            buildConfigField("String", "API_BASE_URL", "\"https://api.example.com/api/\"")
+        }
     }
 
     buildTypes {
-        release {
+        debug {
             isMinifyEnabled = false
+        }
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -38,6 +66,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -66,6 +95,9 @@ dependencies {
 
     // UI 组件
     implementation("androidx.recyclerview:recyclerview:1.3.1")
+
+    // 安全存储
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")
