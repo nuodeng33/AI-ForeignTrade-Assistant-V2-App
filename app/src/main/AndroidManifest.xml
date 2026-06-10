@@ -2,20 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.maolianzhihe">
 
-    <!-- 基础网络权限（已存在，保留） -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- 可选：访问网络状态（便于排查网络问题，建议添加） -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".ForeignTradeApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="${usesCleartextTraffic}">
 
         <activity
             android:name=".SplashActivity"
@@ -25,25 +23,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" android:exported="false"/>
-        <activity android:name=".RegisterActivity" android:exported="false"/>
-        <activity android:name=".ServiceActivity" android:exported="false"/>
-        <activity android:name=".CustomerServiceActivity" android:exported="false"/>
-        <activity android:name=".ContactActivity" android:exported="false"/>
-        <activity android:name=".PersonalCenterActivity" android:exported="false"/>
-        <activity android:name=".SettingActivity" android:exported="false"/>
-        <activity android:name=".MyOrderActivity" android:exported="false"/>
-        <activity android:name=".CreateOrderActivity" android:exported="false"/>
+        <activity android:name=".LoginActivity" android:exported="false" />
+        <activity android:name=".RegisterActivity" android:exported="false" />
+        <activity android:name=".ServiceActivity" android:exported="false" />
+        <activity android:name=".CustomerServiceActivity" android:exported="false" />
+        <activity android:name=".ContactActivity" android:exported="false" />
+        <activity android:name=".PersonalCenterActivity" android:exported="false" />
+        <activity android:name=".SettingActivity" android:exported="false" />
+        <activity android:name=".MyOrderActivity" android:exported="false" />
+        <activity android:name=".CreateOrderActivity" android:exported="false" />
         <activity
             android:name=".ServiceDetailActivity"
             android:exported="false"
-            android:hardwareAccelerated="true"/>
-        <activity
-            android:name=".LogisticsDetailActivity"
-            android:exported="false"/>
-
-        <!-- 新增聊天活动 -->
-
+            android:hardwareAccelerated="true" />
+        <activity android:name=".LogisticsDetailActivity" android:exported="false" />
     </application>
 
 </manifest>
