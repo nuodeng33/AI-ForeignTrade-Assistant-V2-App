@@ -27,10 +27,10 @@ android {
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             buildConfigField("String", "API_BASE_URL", "\"http://192.168.1.3:1337/api/\"")
         }
-        create("test") {
+        create("qa") {
             dimension = "environment"
-            applicationIdSuffix = ".test"
-            versionNameSuffix = "-test"
+            applicationIdSuffix = ".qa"
+            versionNameSuffix = "-qa"
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             buildConfigField("String", "API_BASE_URL", "\"http://192.168.1.3:1337/api/\"")
         }
