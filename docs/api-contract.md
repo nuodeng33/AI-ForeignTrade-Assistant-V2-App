@@ -5,7 +5,7 @@
 V3 reads the backend base URL from `BuildConfig.API_BASE_URL`.
 
 - `dev`: local Strapi-compatible API, cleartext allowed.
-- `test`: test Strapi-compatible API, cleartext allowed until a test HTTPS domain is available.
+- `qa`: QA Strapi-compatible API, cleartext allowed until a QA HTTPS domain is available.
 - `prod`: HTTPS API placeholder, cleartext disabled.
 
 ## Authentication
