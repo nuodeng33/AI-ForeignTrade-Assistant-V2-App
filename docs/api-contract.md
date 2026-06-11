@@ -193,7 +193,7 @@ The app expects Server-Sent Events style chunks with `data: ...` lines and suppo
 ```
 
 ```json
-{ "choices": [{ "delta": { "content": "text" }] }
+{ "choices": [{ "delta": { "content": "text" } }] }
 ```
 
 Stream completion may be signaled with:
