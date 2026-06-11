@@ -1,7 +1,5 @@
 package com.example.maolianzhihe.model
 
-import com.google.gson.annotations.SerializedName
-
 // Strapi 标准响应格式
 data class StrapiResponse<T>(
     val data: T,
@@ -14,7 +12,7 @@ data class StrapiListResponse<T>(
 )
 
 data class Meta(
-    val pagination: Pagination
+    val pagination: Pagination? = null
 )
 
 data class Pagination(
@@ -27,18 +25,20 @@ data class Pagination(
 // 订单数据
 data class Order(
     val id: Int,
-//    val attributes: OrderAttributes
+    val documentId: String? = null,
     val orderNumber: String,
     val goodsInfo: String,
     val status: String,
-    val createdAt: String
+    val createdAt: String,
+    val createTime: String? = null
 )
 
 data class OrderAttributes(
     val orderNumber: String,
     val goodsInfo: String,
     val status: String,
-    val createdAt: String
+    val createdAt: String,
+    val createTime: String? = null
 )
 
 // 创建订单请求
