@@ -79,6 +79,14 @@ module.exports = createCoreController('api::order.order', ({ strapi }) => ({
     return super.create(ctx);
   },
 
+  async update(ctx) {
+    ctx.status = 405;
+    return {
+      error: 'ORDER_UPDATE_DISABLED',
+      message: 'Order update is currently disabled.',
+    };
+  },
+
   async delete(ctx) {
     const userId = requireUser(ctx);
     if (!userId) return;
