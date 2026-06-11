@@ -26,6 +26,7 @@ android {
             versionNameSuffix = "-dev"
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             buildConfigField("String", "API_BASE_URL", "\"http://192.168.1.3:1337/api/\"")
+            buildConfigField("boolean", "USE_MOCK_ORDER_FALLBACK", "true")
         }
         create("qa") {
             dimension = "environment"
@@ -33,11 +34,13 @@ android {
             versionNameSuffix = "-qa"
             manifestPlaceholders["usesCleartextTraffic"] = "true"
             buildConfigField("String", "API_BASE_URL", "\"http://192.168.1.3:1337/api/\"")
+            buildConfigField("boolean", "USE_MOCK_ORDER_FALLBACK", "false")
         }
         create("prod") {
             dimension = "environment"
             manifestPlaceholders["usesCleartextTraffic"] = "false"
             buildConfigField("String", "API_BASE_URL", "\"https://api.example.com/api/\"")
+            buildConfigField("boolean", "USE_MOCK_ORDER_FALLBACK", "false")
         }
     }
 
