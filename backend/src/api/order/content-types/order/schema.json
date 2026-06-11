@@ -7,7 +7,7 @@
     "displayName": "Order"
   },
   "options": {
-    "draftAndPublish": false 
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -28,6 +28,11 @@
     "createTime": {
       "type": "datetime",
       "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }
