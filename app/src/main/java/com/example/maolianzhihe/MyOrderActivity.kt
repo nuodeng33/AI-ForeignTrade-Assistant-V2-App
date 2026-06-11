@@ -96,12 +96,20 @@ class MyOrderActivity : BaseActivity() {
                     orderList.clear()
                     refreshOrderListUI(state.message)
                 }
-                is UiState.Error -> {
-                    progressOrders.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
-                    loadDefaultOrders()
-                }
+                is UiState.Error -> handleOrdersError(state.message)
             }
+        }
+    }
+
+    private fun handleOrdersError(message: String) {
+        progressOrders.visibility = View.GONE
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+
+        if (BuildConfig.USE_MOCK_ORDER_FALLBACK) {
+            loadDefaultOrders()
+        } else {
+            orderList.clear()
+            refreshOrderListUI(message)
         }
     }
 
