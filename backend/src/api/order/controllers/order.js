@@ -19,6 +19,11 @@ const requireUser = (ctx) => {
 
 const userFilter = (userId) => ({ user: { id: { $eq: userId } } });
 
+const documentFilter = (documentId, userId) => ({
+  documentId: { $eq: documentId },
+  ...userFilter(userId),
+});
+
 const mergeFilters = (existingFilters, requiredFilters) => {
   if (!existingFilters || Object.keys(existingFilters).length === 0) {
     return requiredFilters;
@@ -46,12 +51,17 @@ module.exports = createCoreController('api::order.order', ({ strapi }) => ({
     const userId = requireUser(ctx);
     if (!userId) return;
 
-    ctx.query = {
-      ...ctx.query,
-      filters: mergeFilters(ctx.query.filters, userFilter(userId)),
-    };
+    const documentId = ctx.params.documentId || ctx.params.id;
+    const order = await strapi.documents('api::order.order').findFirst({
+      filters: documentFilter(documentId, userId),
+    });
 
-    return super.findOne(ctx);
+    if (!order) {
+      return ctx.notFound('Order not found');
+    }
+
+    const sanitizedOrder = await this.sanitizeOutput(order, ctx);
+    return this.transformResponse(sanitizedOrder);
   },
 
   async create(ctx) {
@@ -75,10 +85,7 @@ module.exports = createCoreController('api::order.order', ({ strapi }) => ({
 
     const documentId = ctx.params.documentId || ctx.params.id;
     const order = await strapi.documents('api::order.order').findFirst({
-      filters: {
-        documentId: { $eq: documentId },
-        ...userFilter(userId),
-      },
+      filters: documentFilter(documentId, userId),
     });
 
     if (!order) {
