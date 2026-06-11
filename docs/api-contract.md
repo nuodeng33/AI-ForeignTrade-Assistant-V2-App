@@ -65,9 +65,12 @@ The app injects this header through the shared OkHttp client. The Strapi backend
 - unauthenticated order requests return `401`;
 - list/detail requests are filtered to `ctx.state.user`;
 - create requests attach `user` server-side and ignore any client-supplied owner;
+- update requests are disabled and return `405`;
 - delete requests first verify that the target `documentId` belongs to the current user.
 
 The Strapi admin still needs the Users & Permissions `Authenticated` role to allow order `find`, `findOne`, `create`, and `delete`; ownership checks happen inside the custom controller after that role gate.
+
+Security Note: The order.update permission must remain disabled for Authenticated users until ownership validation and field-level update policies are implemented.
 
 ### List Orders
 
@@ -110,6 +113,27 @@ Request:
 ```
 
 Do not send `user` from Android. The backend assigns the owner from the JWT.
+
+### Update Order
+
+Order updates are currently disabled.
+
+`PUT orders/{documentId}`
+
+`PATCH orders/{documentId}`
+
+Expected response:
+
+```json
+{
+  "error": "ORDER_UPDATE_DISABLED",
+  "message": "Order update is currently disabled."
+}
+```
+
+Status code: `405 Method Not Allowed`
+
+If order updates are supported later, the backend must add ownership validation and field-level update policies before enabling the route for Authenticated users.
 
 ### Delete Order
 
@@ -169,7 +193,7 @@ The app expects Server-Sent Events style chunks with `data: ...` lines and suppo
 ```
 
 ```json
-{ "choices": [{ "delta": { "content": "text" } }] }
+{ "choices": [{ "delta": { "content": "text" }] }
 ```
 
 Stream completion may be signaled with:
