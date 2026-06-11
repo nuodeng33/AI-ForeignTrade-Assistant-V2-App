@@ -6,7 +6,7 @@ V3 reads the backend base URL from `BuildConfig.API_BASE_URL`.
 
 - `dev`: local Strapi-compatible API, cleartext allowed.
 - `qa`: QA Strapi-compatible API, cleartext allowed until a QA HTTPS domain is available.
-- `prod`: HTTPS API placeholder, cleartext disabled.
+- `prod`: HTTPS API placeholder, cleartext disabled. Replace `https://api.example.com/api/` before release.
 
 ## Authentication
 
@@ -60,7 +60,14 @@ Authenticated requests should include:
 Authorization: Bearer <jwt>
 ```
 
-The app injects this header through the shared OkHttp client.
+The app injects this header through the shared OkHttp client. The Strapi backend also enforces ownership in the order controller:
+
+- unauthenticated order requests return `401`;
+- list/detail requests are filtered to `ctx.state.user`;
+- create requests attach `user` server-side and ignore any client-supplied owner;
+- delete requests first verify that the target `documentId` belongs to the current user.
+
+The Strapi admin still needs the Users & Permissions `Authenticated` role to allow order `find`, `findOne`, `create`, and `delete`; ownership checks happen inside the custom controller after that role gate.
 
 ### List Orders
 
@@ -102,6 +109,8 @@ Request:
 }
 ```
 
+Do not send `user` from Android. The backend assigns the owner from the JWT.
+
 ### Delete Order
 
 `DELETE orders/{documentId}`
@@ -128,8 +137,8 @@ Success response:
 Common failures:
 
 - `401`: token missing or expired.
-- `403`: authenticated user does not have permission to delete the order.
-- `404`: order does not exist or has already been deleted.
+- `403`: authenticated role is not allowed to call the route.
+- `404`: order does not exist, has already been deleted, or belongs to another user.
 
 ## AI Customer Service
 
