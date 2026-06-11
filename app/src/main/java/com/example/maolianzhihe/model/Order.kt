@@ -25,11 +25,11 @@ data class Pagination(
 // 订单数据
 data class Order(
     val id: Int,
-    val documentId: String? = null,
     val orderNumber: String,
     val goodsInfo: String,
     val status: String,
     val createdAt: String,
+    val documentId: String? = null,
     val createTime: String? = null
 )
 
