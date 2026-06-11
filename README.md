@@ -1,314 +1,150 @@
 # AI Foreign Trade Assistant V2 App
 
-## 1. 项目简介
+AI Foreign Trade Assistant V2 App 是面向外贸业务场景的 Android + Strapi 项目，应用名为“贸联智盒”。当前代码已经进入 V3 foundation 阶段：Android 端完成了基础环境分层、登录会话、订单 Repository/ViewModel、订单列表、创建和删除闭环；后端提供 Strapi 订单 content-type，并开始补齐用户归属和权限边界。
 
-AI Foreign Trade Assistant V2 App 是一个面向外贸业务场景的 Android Kotlin 应用，应用名称为“贸联智盒”。项目围绕外贸服务、智能客服、订单管理、物流查询、个人中心等业务能力展开，目标是为外贸从业者提供咨询、服务浏览、订单创建和物流辅助查询的一体化移动端工具。
+## 当前状态
 
-当前版本更接近 V2 功能原型：主要页面和业务流程已经具备，后端对接方向以 Strapi 接口为主，同时包含 DeepSeek 智能问答能力。项目后续 V3 的重点应放在正式环境配置、安全、架构分层、真实数据接入和工程质量提升上。
+已完成或已有基础：
 
-## 2. 技术栈
+- Android Kotlin + XML 页面结构。
+- Gradle product flavors：`dev`、`qa`、`prod`。
+- `BuildConfig.API_BASE_URL` 管理 API 地址。
+- Retrofit / OkHttp / Gson 网络层。
+- JWT 通过共享 OkHttp client 自动注入 `Authorization` header。
+- SessionManager 使用 EncryptedSharedPreferences，并保留 legacy SharedPreferences 兼容写入。
+- 订单列表使用 RecyclerView 动态展示。
+- 订单创建与 Strapi REST API 对接。
+- 订单删除使用 Strapi 5 `documentId`。
+- Strapi order 增加 `user` 关系，controller 按当前登录用户过滤订单。
+- Android CI 已覆盖 unit test、lint、dev debug 构建。
+- Backend CI 已覆盖 `npm ci` 和 `npm run build`。
 
-- 开发语言：Kotlin
-- 平台：Android
-- 构建工具：Gradle Kotlin DSL
-- Android Gradle Plugin：8.13.0
-- Kotlin：2.0.21
-- UI：XML Layout、AppCompat、Material Components、ConstraintLayout
-- 网络请求：Retrofit、OkHttp、Gson Converter
-- 异步处理：Kotlin Coroutines
-- 生命周期：AndroidX Lifecycle
-- 列表组件：RecyclerView
-- 图表组件：MPAndroidChart
-- 网页展示：WebView
-- 本地存储：SharedPreferences
-- 后端接口风格：Strapi REST API
+仍需继续推进：
 
-## 3. 功能模块
+- `prod` flavor 仍使用 `https://api.example.com/api/` 占位地址，发布前必须替换为真实 HTTPS 域名。
+- Strapi Users & Permissions 后台仍需为 Authenticated 角色开启 order `find`、`findOne`、`create`、`delete` 权限。
+- 个人中心、物流详情仍有模拟数据。
+- 订单缺分页、搜索、服务端筛选和更完整的业务字段。
+- 失败后的模拟订单 fallback 仍适合 dev/demo，不适合 qa/prod。
+- 头像选择仍需迁移到 Activity Result API / Android Photo Picker。
 
-### 启动与认证
+## 技术栈
 
-- 启动页 `SplashActivity`
-- 登录页 `LoginActivity`
-- 注册页 `RegisterActivity`
-- 登录态保存与检查
-- 退出登录与会话清理
+Android：
 
-### 服务中心
+- Kotlin
+- Gradle Kotlin DSL
+- Android Gradle Plugin 8.13.0
+- Kotlin 2.0.21
+- XML Layout、AppCompat、Material Components、ConstraintLayout
+- Retrofit、OkHttp、Gson Converter
+- Kotlin Coroutines
+- AndroidX Lifecycle
+- RecyclerView
+- MPAndroidChart
+- WebView
+- EncryptedSharedPreferences
 
-- 服务首页 `ServiceActivity`
-- 市场调研服务入口
-- 报关清关服务入口
-- 物流解决方案入口
-- 外贸法律咨询入口
-- 服务详情 WebView 展示 `ServiceDetailActivity`
+Backend：
 
-### 智能客服
+- Strapi 5.31.x
+- Node.js >=20 <=24
+- Users & Permissions plugin
+- MySQL driver dependency is present (`mysql2`)
 
-- 智能客服页面 `CustomerServiceActivity`
-- 快捷问题入口
-- 用户消息与 AI 消息列表展示
-- DeepSeek 外贸问答接口
-- 流式输出效果
-
-### 联系我们
-
-- 联系页面 `ContactActivity`
-- 底部导航联动
-
-### 个人中心
-
-- 个人中心页面 `PersonalCenterActivity`
-- 用户名展示
-- 咨询数量、订单数量等统计展示
-- 咨询类型图表展示
-- 头像选择
-- 我的订单入口
-
-### 订单管理
-
-- 我的订单页面 `MyOrderActivity`
-- 从后端加载订单列表
-- 创建订单页面 `CreateOrderActivity`
-- 提交订单到 Strapi 后端
-- 订单状态展示
-- 快递单号复制、分享、查询
-
-### 物流详情
-
-- 物流详情页面 `LogisticsDetailActivity`
-- 展示订单号、配送时间、配送路线、实时位置
-- 当前主要为模拟数据
-
-### 设置
-
-- 设置页面 `SettingActivity`
-- 退出登录
-- 清除本地用户会话
-
-## 4. 项目结构
+## 项目结构
 
 ```text
 .
+├── app/                         Android app
+├── backend/                     Strapi backend
+├── docs/api-contract.md         Android 与后端接口契约
+├── .github/workflows/           CI workflows
 ├── build.gradle.kts
 ├── settings.gradle.kts
-├── gradle/
-│   └── libs.versions.toml
-└── app/
-    ├── build.gradle.kts
-    └── src/main/
-        ├── AndroidManifest.xml
-        ├── java/com/example/maolianzhihe/
-        │   ├── BaseActivity.kt
-        │   ├── SplashActivity.kt
-        │   ├── LoginActivity.kt
-        │   ├── RegisterActivity.kt
-        │   ├── ServiceActivity.kt
-        │   ├── CustomerServiceActivity.kt
-        │   ├── ContactActivity.kt
-        │   ├── PersonalCenterActivity.kt
-        │   ├── SettingActivity.kt
-        │   ├── MyOrderActivity.kt
-        │   ├── CreateOrderActivity.kt
-        │   ├── ServiceDetailActivity.kt
-        │   ├── LogisticsDetailActivity.kt
-        │   ├── ChatAdapter.kt
-        │   ├── model/
-        │   │   ├── AuthResponse.kt
-        │   │   └── Order.kt
-        │   └── network/
-        │       ├── ApiService.kt
-        │       └── StreamService.kt
-        └── res/
-            ├── layout/
-            ├── drawable/
-            ├── mipmap-*/
-            └── values/
+└── gradle/
 ```
 
-### 关键文件说明
+## Android 运行方式
 
-- `AndroidManifest.xml`：声明权限、应用主题、Activity 列表和启动入口。
-- `BaseActivity.kt`：封装标题栏和底部导航逻辑。
-- `ApiService.kt`：Retrofit 接口定义，包含登录、注册、订单、AI 问答等接口。
-- `StreamService.kt`：OkHttp 流式 AI 问答请求实现。
-- `Order.kt`：Strapi 订单接口相关数据模型。
-- `AuthResponse.kt`：登录/注册认证响应模型。
-
-## 5. 运行方式
-
-### 环境要求
+环境要求：
 
 - Android Studio 最新稳定版或较新版本
 - JDK 17 或 Android Studio 内置 JDK
 - Android SDK 36
-- Gradle Wrapper 或 Android Studio 自动同步 Gradle
-- 可访问后端服务的网络环境
+- 可访问 Strapi 后端服务的网络环境
 
-### 运行步骤
-
-1. 克隆项目：
+步骤：
 
 ```bash
 git clone https://github.com/nuodeng33/AI-ForeignTrade-Assistant-V2-App.git
+cd AI-ForeignTrade-Assistant-V2-App
+./gradlew assembleDevDebug
 ```
 
-2. 使用 Android Studio 打开项目根目录。
+在 Android Studio 中打开项目根目录，选择 `devDebug`、`qaDebug` 或 `prodRelease` 等变体运行。
 
-3. 等待 Gradle 同步完成。
+API 地址位于 `app/build.gradle.kts` 的 product flavors：
 
-4. 确认后端服务地址可访问。
+- `dev`: `http://192.168.1.3:1337/api/`
+- `qa`: `http://192.168.1.3:1337/api/`
+- `prod`: `https://api.example.com/api/`
 
-当前代码中后端地址位于：
+发布前必须替换 `prod` 地址，并确保生产环境关闭明文流量。
 
-- `app/src/main/java/com/example/maolianzhihe/network/ApiService.kt`
-- `app/src/main/java/com/example/maolianzhihe/network/StreamService.kt`
+## Backend 运行方式
 
-当前配置为局域网 HTTP 地址，运行前需要确保 Android 设备或模拟器能访问这些 IP。
+环境要求：
 
-5. 选择模拟器或真机运行 `app` 模块。
+- Node.js >=20.0.0 <=24.x.x
+- npm
+- 可用数据库配置。默认 Strapi 项目可按本地配置启动，生产环境需配置数据库、密钥和部署变量。
 
-### 注意事项
+步骤：
 
-- 当前项目使用 HTTP 明文请求，并在 Manifest 中开启了 `usesCleartextTraffic`。
-- 如果使用模拟器访问本机服务，通常不能直接使用局域网 IP，需要根据实际网络环境调整。
-- 如果后端未启动，登录、注册、订单、AI 问答等功能会请求失败。
+```bash
+cd backend
+npm ci
+npm run develop
+```
 
-## 6. 当前问题
+构建检查：
 
-1. 后端地址硬编码
+```bash
+cd backend
+npm run build
+```
 
-`ApiService.kt` 和 `StreamService.kt` 中的 Base URL 写死为局域网 IP，不适合多人协作、测试环境切换和正式发布。
+订单权限配置：
 
-2. 两个网络服务地址不一致
+1. 启动 Strapi admin。
+2. 打开 Settings -> Users & Permissions plugin -> Roles -> Authenticated。
+3. 为 order 开启 `find`、`findOne`、`create`、`delete`。
+4. 保存后，用两个不同用户分别创建订单，验证列表和删除只能操作自己的订单。
 
-普通接口和流式 AI 接口使用了不同的局域网 IP，容易导致部分功能可用、部分功能不可用。
+## 接口契约
 
-3. HTTP 明文请求存在安全风险
+接口细节见 `docs/api-contract.md`。关键约定：
 
-当前使用 `http://`，并开启 `android:usesCleartextTraffic="true"`，生产环境应切换到 HTTPS。
+- Android 请求订单接口时必须携带 JWT。
+- Android 创建订单时不传 `user` 字段。
+- 后端从 `ctx.state.user` 写入订单归属。
+- 后端查询和删除都按当前用户过滤。
+- 删除订单使用 Strapi 5 `documentId`，不是数字 `id`。
 
-4. Token 未统一注入请求头
+## CI
 
-登录后保存了 JWT，但订单等接口请求未看到统一添加 `Authorization` Header 的逻辑。
+当前 GitHub Actions：
 
-5. Activity 中业务逻辑较重
+- Android：`testDevDebugUnitTest`、`lintDevDebug`、`assembleDevDebug`。
+- Backend：`npm ci`、`npm run build`。
 
-网络请求、数据处理、UI 更新、跳转逻辑大量写在 Activity 中，后续维护和测试成本较高。
+## 后续优先级
 
-6. 缺少 Repository / ViewModel 分层
-
-当前没有形成清晰的数据层、业务层和 UI 层结构，功能扩展时容易产生重复代码。
-
-7. 流式接口 JSON 处理较脆弱
-
-`StreamService.kt` 中使用字符串拼接 JSON，并手写解析 `content` 字段，遇到复杂转义或响应结构变化时容易出错。
-
-8. 本地存储安全性不足
-
-JWT 和用户信息保存在普通 SharedPreferences 中，安全性不足。
-
-9. 部分数据仍为模拟数据
-
-个人中心统计、物流详情等模块仍使用本地模拟数据，尚未完全对接真实后端。
-
-10. 订单列表展示能力有限
-
-订单页面最多展示固定 3 条，筛选标签没有真正按状态过滤，列表扩展性不足。
-
-11. WebView 安全策略不足
-
-服务详情页加载外部网页并开启 JavaScript，但缺少域名白名单、URL 校验和更严格的安全策略。
-
-12. Release 配置不完整
-
-Release 构建未开启混淆和资源压缩，日志拦截器也未区分调试与生产环境。
-
-13. Android 新版本兼容问题
-
-头像选择仍使用 `READ_EXTERNAL_STORAGE` 和 `startActivityForResult`，需要适配新版本 Android 的权限和 Activity Result API。
-
-14. 版本号不一致
-
-Gradle 中 `versionName = "1.0"`，但字符串资源中显示版本号 `3.1.0`。
-
-## 7. V3 规划
-
-### 架构升级
-
-- 引入 MVVM 架构。
-- Activity 只负责页面展示和用户交互。
-- 使用 ViewModel 管理页面状态。
-- 使用 Repository 统一管理网络、本地缓存和业务数据。
-- 按业务模块拆分认证、订单、客服、个人中心等代码。
-
-### 网络与环境配置升级
-
-- 将 Base URL 移入 `BuildConfig`、Gradle 配置或环境配置文件。
-- 区分开发、测试、生产环境。
-- 统一 Retrofit 和 OkHttp 初始化。
-- 使用 OkHttp Interceptor 自动添加 Token。
-- 增加统一错误处理、请求日志控制、超时配置和重试策略。
-
-### 安全升级
-
-- 后端接口切换 HTTPS。
-- 关闭生产环境明文流量。
-- JWT 使用 EncryptedSharedPreferences 或 Jetpack Security 保存。
-- Release 环境关闭 BODY 级别请求日志。
-- WebView 增加可信域名白名单。
-- 对外部 URL 跳转做校验。
-
-### 数据层升级
-
-- 引入 Room 或 DataStore。
-- 缓存订单列表、用户资料、聊天记录等关键数据。
-- 支持离线展示和失败重试。
-- 建立统一的数据模型和 DTO 转换逻辑。
-
-### 智能客服升级
-
-- 使用稳定的 SSE / WebSocket / 流式请求封装。
-- 使用 Gson 或 kotlinx.serialization 解析流式响应。
-- 支持停止生成、重新生成、复制回答、清空上下文。
-- 聊天记录支持本地保存和后端同步。
-- 增加异常恢复和网络断开提示。
-
-### 订单模块升级
-
-- 订单列表改为 RecyclerView 动态渲染。
-- 支持分页、下拉刷新、状态筛选、搜索。
-- 创建订单表单增加更多外贸字段。
-- 支持订单详情页、物流轨迹页、状态流转。
-- 接入真实物流查询接口。
-
-### 个人中心升级
-
-- 用户资料从后端接口获取。
-- 头像上传到后端或对象存储。
-- 统计数据改为真实接口。
-- 增加账户安全、语言、货币、通知等真实设置能力。
-
-### UI 与交互升级
-
-- 统一设计规范和组件样式。
-- 优化底部导航实现，可考虑 Navigation Component。
-- 增加加载中、空状态、错误状态。
-- 优化表单校验和错误提示。
-- 适配深色模式和多屏幕尺寸。
-
-### 工程质量升级
-
-- 增加单元测试和 UI 测试。
-- 增加接口 Mock 测试。
-- 配置 CI 构建检查。
-- 开启 Release 混淆、资源压缩和签名配置。
-- 建立代码规范和提交规范。
-- 梳理版本号规则，统一应用内显示版本与 Gradle 版本。
-
-### 后端协同规划
-
-- 明确 Strapi 数据模型。
-- 完善用户、订单、物流、统计、聊天记录等接口。
-- 增加接口鉴权和权限控制。
-- 输出接口文档，方便前后端协作。
-- 为 V3 提供稳定测试环境和生产环境。
+1. 替换生产 API 域名并完成 HTTPS 发布配置。
+2. 拆掉 qa/prod 的模拟订单 fallback，改为真实错误和空态。
+3. 为订单 ownership controller 增加自动化测试。
+4. 改造个人中心真实接口和 ViewModel 状态层。
+5. 接入真实物流模型与物流查询接口。
+6. 引入 DataStore/Room 缓存订单、聊天和用户资料。
+7. 迁移头像选择到 Android Photo Picker。
