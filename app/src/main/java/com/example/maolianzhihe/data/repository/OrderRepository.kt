@@ -35,4 +35,27 @@ class OrderRepository(
             UiState.Error("网络连接失败：${e.message ?: "未知错误"}")
         }
     }
+
+    suspend fun deleteOrder(documentId: String): UiState<Order> {
+        return try {
+            val response = apiService.deleteOrder(documentId)
+            if (response.isSuccessful) {
+                val order = response.body()?.data
+                if (order != null) UiState.Success(order) else UiState.Empty("订单已删除")
+            } else {
+                UiState.Error(deleteErrorMessage(response.code()), response.code())
+            }
+        } catch (e: Exception) {
+            UiState.Error("网络连接失败：${e.message ?: "未知错误"}")
+        }
+    }
+
+    private fun deleteErrorMessage(code: Int): String {
+        return when (code) {
+            401 -> "登录已失效，请重新登录后再删除订单"
+            403 -> "当前账号没有删除该订单的权限"
+            404 -> "订单不存在或已被删除"
+            else -> "删除订单失败：$code"
+        }
+    }
 }

@@ -73,9 +73,11 @@ Expected response:
   "data": [
     {
       "id": 1,
+      "documentId": "abc123",
       "orderNumber": "ORD001",
       "goodsInfo": "Sample goods",
       "status": "待发货",
+      "createTime": "2026-06-10T00:00:00.000Z",
       "createdAt": "2026-06-10T00:00:00.000Z"
     }
   ],
@@ -99,6 +101,35 @@ Request:
   }
 }
 ```
+
+### Delete Order
+
+`DELETE orders/{documentId}`
+
+Strapi 5 order deletion uses the order `documentId`, not the numeric `id`. Android should read `documentId` from the order list/create response and pass it as the path parameter.
+
+Success response:
+
+```json
+{
+  "data": {
+    "id": 1,
+    "documentId": "abc123",
+    "orderNumber": "ORD001",
+    "goodsInfo": "Sample goods",
+    "status": "待发货",
+    "createTime": "2026-06-10T00:00:00.000Z",
+    "createdAt": "2026-06-10T00:00:00.000Z"
+  },
+  "meta": {}
+}
+```
+
+Common failures:
+
+- `401`: token missing or expired.
+- `403`: authenticated user does not have permission to delete the order.
+- `404`: order does not exist or has already been deleted.
 
 ## AI Customer Service
 

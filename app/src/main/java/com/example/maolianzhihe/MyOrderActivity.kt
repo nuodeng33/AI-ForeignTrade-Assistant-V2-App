@@ -54,6 +54,7 @@ class MyOrderActivity : BaseActivity() {
         initViews()
         initOrderList()
         observeOrdersState()
+        observeDeleteOrderState()
         setClickListeners()
         initBackPressedCallback()
         orderViewModel.loadOrders()
@@ -100,6 +101,24 @@ class MyOrderActivity : BaseActivity() {
                     Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
                     loadDefaultOrders()
                 }
+            }
+        }
+    }
+
+    private fun observeDeleteOrderState() {
+        orderViewModel.deleteOrderState.observe(this) { state ->
+            when (state) {
+                UiState.Idle -> Unit
+                UiState.Loading -> Toast.makeText(this, "正在删除订单...", Toast.LENGTH_SHORT).show()
+                is UiState.Success -> {
+                    Toast.makeText(this, "订单已删除", Toast.LENGTH_SHORT).show()
+                    orderViewModel.loadOrders()
+                }
+                is UiState.Empty -> {
+                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    orderViewModel.loadOrders()
+                }
+                is UiState.Error -> Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -229,12 +248,22 @@ class MyOrderActivity : BaseActivity() {
     }
 
     private fun showOrderDetails(order: Order) {
-        val details = "订单名称：${order.goodsInfo}\n快递单号：${order.orderNumber}\n订单状态：${order.status}\n创建时间：${order.createdAt}"
+        val details = "订单名称：${order.goodsInfo}\n快递单号：${order.orderNumber}\n订单状态：${order.status}\n创建时间：${order.createTime ?: order.createdAt}"
         AlertDialog.Builder(this)
             .setTitle("订单详情")
             .setMessage(details)
             .setPositiveButton("关闭", null)
             .setNeutralButton("复制单号") { _, _ -> copyToClipboard("快递单号", order.orderNumber) }
+            .setNegativeButton("删除订单") { _, _ -> confirmDeleteOrder(order) }
+            .show()
+    }
+
+    private fun confirmDeleteOrder(order: Order) {
+        AlertDialog.Builder(this)
+            .setTitle("删除订单")
+            .setMessage("确定要删除订单 ${order.orderNumber} 吗？删除后将从 Strapi 后端移除。")
+            .setNegativeButton("取消", null)
+            .setPositiveButton("确认删除") { _, _ -> orderViewModel.deleteOrder(order) }
             .show()
     }
 
