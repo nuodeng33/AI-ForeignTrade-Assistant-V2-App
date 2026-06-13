@@ -37,6 +37,7 @@
     <string name="notification_dialog_title">Notification Mode</string>
     <string name="notification_permission_denied">Notification permission denied. Notifications are off.</string>
     <string name="notification_permission_needed">Notification permission is required to enable alerts.</string>
+    <string name="notification_mode_updated">Notification mode updated</string>
     <string name="support_help">Support</string>
     <string name="common_question">FAQ</string>
     <string name="common_question_desc">View common questions</string>
@@ -48,6 +49,8 @@
 
     <string name="logout">Log Out</string>
     <string name="logout_tip">Log out of the current account?</string>
+    <string name="logout_success">Logged out</string>
+    <string name="logout_failed">Logout failed: %1$s</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
 </resources>

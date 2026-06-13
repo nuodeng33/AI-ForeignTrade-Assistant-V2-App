@@ -37,6 +37,7 @@
     <string name="notification_dialog_title">通知模式</string>
     <string name="notification_permission_denied">未获得通知权限，已关闭通知</string>
     <string name="notification_permission_needed">需要通知权限才能开启提醒</string>
+    <string name="notification_mode_updated">通知模式已更新</string>
     <string name="support_help">支持与帮助</string>
     <string name="common_question">常见问题</string>
     <string name="common_question_desc">查看常见问题解答</string>
@@ -48,6 +49,8 @@
 
     <string name="logout">退出登录</string>
     <string name="logout_tip">确定要退出登录并关闭应用吗？</string>
+    <string name="logout_success">退出登录成功</string>
+    <string name="logout_failed">退出失败：%1$s</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
 </resources>
