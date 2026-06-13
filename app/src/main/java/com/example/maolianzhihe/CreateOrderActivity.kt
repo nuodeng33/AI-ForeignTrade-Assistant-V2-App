@@ -1,7 +1,6 @@
 package com.example.maolianzhihe
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageView
@@ -113,7 +112,7 @@ class CreateOrderActivity : BaseActivity() {
                 UiState.Loading -> Toast.makeText(this, "正在提交订单...", Toast.LENGTH_SHORT).show()
                 is UiState.Success -> {
                     Toast.makeText(this, "订单创建成功！", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(this, MyOrderActivity::class.java))
+                    setResult(RESULT_OK)
                     finish()
                 }
                 is UiState.Empty -> Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
