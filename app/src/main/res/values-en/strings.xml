@@ -7,6 +7,10 @@
     <string name="title_mine">Profile</string>
     <string name="title_setting">Settings</string>
     <string name="title_my_order">My Orders</string>
+    <string name="nav_service">Services</string>
+    <string name="nav_customer">AI Chat</string>
+    <string name="nav_contact">Contact</string>
+    <string name="nav_mine">Profile</string>
     <string name="month_orders">Orders This Month</string>
     <string name="ongoing_orders">Ongoing Orders</string>
     <string name="order_status_statistics">Order Status</string>
