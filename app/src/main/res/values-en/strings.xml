@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TradeLink SmartBox</string>
+    <string name="title_service">Services</string>
+    <string name="title_customer">Customer Service</string>
+    <string name="title_contact">Contact Us</string>
+    <string name="title_mine">Profile</string>
+    <string name="title_setting">Settings</string>
+    <string name="title_my_order">My Orders</string>
+    <string name="month_orders">Orders This Month</string>
+    <string name="ongoing_orders">Ongoing Orders</string>
+    <string name="order_status_statistics">Order Status</string>
+    <string name="service_management">Service Management</string>
+    <string name="order_list_entry">My Orders</string>
+    <string name="order_list_entry_desc">View all service order status</string>
+
+    <string name="back">Back</string>
+    <string name="setting">Settings</string>
+    <string name="account_setting">Account</string>
+    <string name="notification_setting">Notifications</string>
+    <string name="notification_desc">Order status alerts and system messages</string>
+    <string name="two_factor_auth">Two-factor Authentication</string>
+    <string name="two_factor_desc">Login protection and account security</string>
+    <string name="preference_setting">Preferences</string>
+    <string name="language_select">Language</string>
+    <string name="language_cn">Simplified Chinese</string>
+    <string name="language_en">English</string>
+    <string name="language_system">Follow System</string>
+    <string name="language_dialog_title">Select Language</string>
+    <string name="language_changed">Language updated</string>
+    <string name="currency_unit">Currency</string>
+    <string name="currency_cny">Chinese Yuan (CNY)</string>
+    <string name="notification_mode_all">All Notifications</string>
+    <string name="notification_mode_orders">Orders Only</string>
+    <string name="notification_mode_silent">Silent Notifications</string>
+    <string name="notification_mode_off">Notifications Off</string>
+    <string name="notification_dialog_title">Notification Mode</string>
+    <string name="notification_permission_denied">Notification permission denied. Notifications are off.</string>
+    <string name="notification_permission_needed">Notification permission is required to enable alerts.</string>
+    <string name="support_help">Support</string>
+    <string name="common_question">FAQ</string>
+    <string name="common_question_desc">View common questions</string>
+    <string name="feedback">Feedback</string>
+    <string name="feedback_desc">Send suggestions or report issues</string>
+    <string name="about_app">About</string>
+    <string name="app_version">Version 3.0.0</string>
+    <string name="arrow">Arrow</string>
+
+    <string name="logout">Log Out</string>
+    <string name="logout_tip">Log out of the current account?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+</resources>
