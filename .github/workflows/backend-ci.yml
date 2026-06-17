@@ -29,5 +29,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Run backend tests
+        run: npm test
+
       - name: Build Strapi backend
         run: npm run build
