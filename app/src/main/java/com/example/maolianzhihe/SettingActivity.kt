@@ -37,7 +37,16 @@ class SettingActivity : BaseActivity() {
         bindViews()
         bindSettingActions()
         updateLanguageSummary()
+        synchronizeNotificationPermissionState()
         updateNotificationSummary()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::switchNotifications.isInitialized) {
+            synchronizeNotificationPermissionState()
+            updateNotificationSummary()
+        }
     }
 
     private fun bindViews() {
@@ -127,6 +136,14 @@ class SettingActivity : BaseActivity() {
         SettingsManager.setNotificationMode(mode)
         updateNotificationSummary()
         Toast.makeText(this, R.string.notification_mode_updated, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun synchronizeNotificationPermissionState() {
+        if (!hasNotificationPermission() &&
+            SettingsManager.notificationMode() != SettingsManager.NOTIFICATION_OFF
+        ) {
+            SettingsManager.setNotificationMode(SettingsManager.NOTIFICATION_OFF)
+        }
     }
 
     private fun updateNotificationSummary() {
