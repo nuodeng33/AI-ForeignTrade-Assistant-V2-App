@@ -67,10 +67,13 @@
                     android:gravity="center_vertical"/>
 
                 <LinearLayout
+                    android:id="@+id/row_notification_mode"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:paddingHorizontal="16dp"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -83,6 +86,7 @@
                             android:text="@string/notification_setting"
                             android:textSize="16sp"/>
                         <TextView
+                            android:id="@+id/tv_notification_current"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/notification_desc"
@@ -92,6 +96,7 @@
 
                     <!-- 替换为Material的SwitchCompat -->
                     <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_notifications"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"/>
@@ -148,10 +153,13 @@
                     android:gravity="center_vertical"/>
 
                 <LinearLayout
+                    android:id="@+id/row_language"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:paddingHorizontal="16dp"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -164,6 +172,7 @@
                             android:text="@string/language_select"
                             android:textSize="16sp"/>
                         <TextView
+                            android:id="@+id/tv_language_current"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/language_cn"

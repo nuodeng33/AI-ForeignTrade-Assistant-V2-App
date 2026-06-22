@@ -1,9 +1,6 @@
 package com.example.maolianzhihe
 
-import android.Manifest
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -13,8 +10,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import com.example.maolianzhihe.data.local.SessionManager
+import com.example.maolianzhihe.model.ChartPoint
+import com.example.maolianzhihe.model.ProfileSummary
+import com.example.maolianzhihe.ui.UiState
+import com.example.maolianzhihe.viewmodel.ProfileViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -23,13 +25,6 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.io.FileInputStream
 import java.io.FileNotFoundException
-
-// 数据模型：存储个人中心统计数据
-data class PersonalData(
-    val monthConsultCount: Int, // 本月咨询数
-    val ongoingOrderCount: Int, // 进行中订单数
-    val consultTypeData: List<Pair<String, Int>> // 咨询类型统计（类型/日期, 数量）
-)
 
 class PersonalCenterActivity : BaseActivity() {
 
@@ -40,8 +35,6 @@ class PersonalCenterActivity : BaseActivity() {
         private val NAV_CONTACT = R.id.nav_contact
         private val NAV_MINE = R.id.nav_mine
 
-        // 权限请求码
-        private const val PERMISSION_REQUEST_CODE = 100
         // 相册选择请求码
         private const val GALLERY_REQUEST_CODE = 101
     }
@@ -51,20 +44,19 @@ class PersonalCenterActivity : BaseActivity() {
     private lateinit var tvMonthConsultCount: TextView
     private lateinit var tvOngoingOrderCount: TextView
     private lateinit var barChartConsultType: BarChart
+    private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_center)
-        initBottomNav(R.id.tv_nav_text4)
+        profileViewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
 
-        val spf:SharedPreferences = getSharedPreferences("user_info",MODE_PRIVATE)
-        val username : String  = spf.getString("username","unknown")!!
-        val usernameTetx : TextView = findViewById(R.id.user_name)
-        usernameTetx.text = username
+        val usernameText: TextView = findViewById(R.id.user_name)
+        usernameText.text = SessionManager.username()
 
         try {
             // 初始化标题栏
-            initTitleBar("个人中心", showSetting = true)
+            initTitleBar(getString(R.string.title_mine), showSetting = true)
             // 初始化底部导航
             initBottomNav(NAV_MINE)
 
@@ -83,12 +75,18 @@ class PersonalCenterActivity : BaseActivity() {
             // 绑定底部导航点击事件
             bindBottomNavClicks()
 
-            // 初始化并更新数据
-            fetchAndUpdatePersonalData()
+            observeProfileSummaryState()
 
         } catch (e: Exception) {
             Toast.makeText(this, "个人中心初始化失败：${e.message}", Toast.LENGTH_LONG).show()
             e.printStackTrace()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::profileViewModel.isInitialized) {
+            fetchAndUpdatePersonalData()
         }
     }
 
@@ -110,7 +108,7 @@ class PersonalCenterActivity : BaseActivity() {
      */
     private fun bindAvatarClick() {
         ivAvatar.setOnClickListener {
-            checkPermissionAndOpenGallery()
+            openGallery()
         }
     }
 
@@ -126,51 +124,68 @@ class PersonalCenterActivity : BaseActivity() {
         }
     }
 
-    /**
-     * 请求并更新个人中心数据（模拟接口请求，实际替换为真实接口）
-     */
     private fun fetchAndUpdatePersonalData() {
-        // 模拟从服务器获取数据（实际项目替换为Retrofit/OkHttp请求）
-        val mockData = PersonalData(
-            monthConsultCount = 35, // 模拟本月咨询数
-            ongoingOrderCount = 7,  // 模拟进行中订单数
-            consultTypeData = listOf( // 模拟咨询类型统计数据
-                "邮件" to 12, "电话" to 18, "在线" to 25, "上门" to 8,
-                "微信" to 20, "短信" to 5
-            )
-        )
-
-        // 更新UI显示
-        updatePersonalDataUI(mockData)
+        profileViewModel.loadProfileSummary()
     }
 
-    /**
-     * 根据数据更新UI
-     */
-    private fun updatePersonalDataUI(data: PersonalData) {
-        // 更新本月咨询数
-        tvMonthConsultCount.text = data.monthConsultCount.toString()
-        // 更新进行中订单数
+    private fun observeProfileSummaryState() {
+        profileViewModel.profileSummaryState.observe(this) { state ->
+            when (state) {
+                UiState.Idle -> Unit
+                UiState.Loading -> showProfileLoading()
+                is UiState.Success -> updatePersonalDataUI(state.data)
+                is UiState.Empty -> showProfileEmpty(state.message)
+                is UiState.Error -> showProfileError(state.message)
+            }
+        }
+    }
+
+    private fun showProfileLoading() {
+        tvMonthConsultCount.text = "--"
+        tvOngoingOrderCount.text = "--"
+        barChartConsultType.clear()
+        barChartConsultType.setNoDataText("正在加载订单统计...")
+    }
+
+    private fun showProfileEmpty(message: String) {
+        tvMonthConsultCount.text = "0"
+        tvOngoingOrderCount.text = "0"
+        barChartConsultType.clear()
+        barChartConsultType.setNoDataText(message)
+    }
+
+    private fun showProfileError(message: String) {
+        tvMonthConsultCount.text = "0"
+        tvOngoingOrderCount.text = "0"
+        barChartConsultType.clear()
+        barChartConsultType.setNoDataText("暂无订单统计")
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun updatePersonalDataUI(data: ProfileSummary) {
+        tvMonthConsultCount.text = data.monthOrderCount.toString()
         tvOngoingOrderCount.text = data.ongoingOrderCount.toString()
-        // 更新咨询类型统计图
-        updateConsultTypeChart(data.consultTypeData)
+        updateOrderStatusChart(data.orderStatusData)
     }
 
-    /**
-     * 更新咨询类型柱状图
-     */
-    private fun updateConsultTypeChart(consultData: List<Pair<String, Int>>) {
+    private fun updateOrderStatusChart(orderStatusData: List<ChartPoint>) {
+        if (orderStatusData.isEmpty()) {
+            barChartConsultType.clear()
+            barChartConsultType.setNoDataText("暂无订单统计")
+            return
+        }
+
         // 1. 准备图表数据
         val entries = mutableListOf<BarEntry>()
         val xAxisLabels = mutableListOf<String>()
 
-        consultData.forEachIndexed { index, (type, count) ->
-            entries.add(BarEntry(index.toFloat(), count.toFloat()))
-            xAxisLabels.add(type)
+        orderStatusData.forEachIndexed { index, item ->
+            entries.add(BarEntry(index.toFloat(), item.value.toFloat()))
+            xAxisLabels.add(item.label)
         }
 
         // 2. 配置数据集
-        val dataSet = BarDataSet(entries, "咨询数量")
+        val dataSet = BarDataSet(entries, "订单数量")
         // 设置柱状图颜色
         dataSet.color = ContextCompat.getColor(this, R.color.blue_500)
         // 设置数值文字颜色
@@ -217,49 +232,12 @@ class PersonalCenterActivity : BaseActivity() {
     }
 
     /**
-     * 检查权限并打开相册
-     */
-    private fun checkPermissionAndOpenGallery() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                PERMISSION_REQUEST_CODE
-            )
-        } else {
-            openGallery()
-        }
-    }
-
-    /**
      * 打开系统相册
      */
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
-    }
-
-    /**
-     * 权限申请结果回调
-     */
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery()
-            } else {
-                Toast.makeText(this, "需要存储权限才能选择图片", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     /**

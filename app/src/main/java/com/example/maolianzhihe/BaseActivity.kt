@@ -1,13 +1,11 @@
 package com.example.maolianzhihe
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.math.log
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -51,66 +49,27 @@ open class BaseActivity : AppCompatActivity() {
      * @param selectId 默认选中的导航项ID（对应nav_service/nav_customer等）
      */
     protected fun initBottomNav(selectId: Int) {
-        // 找到底部导航根布局（LinearLayout）
-        val bnvMain = findViewById<LinearLayout>(R.id.bnv_main)
-        bnvMain?.apply {
-            // 1. 根据当前选中项设置导航栏背景色（仅客服页背景蓝）
-
-            // 2. 重置所有导航项样式为默认
-            resetBottomNavStyle()
-            // 3. 设置默认选中项的样式（变蓝）
-            setSelectedNavItem(selectId)
-            // 4. 设置导航项点击事件
-            setNavItemClickListener()
-            setBottomNavBgColor(selectId)
-        }
-    }
-
-    /**
-     * 动态设置底部导航栏背景色（仅客服页背景蓝，其他页面默认白色）
-     * @param selectId 当前选中的导航项ID
-     */
-    private fun setBottomNavBgColor(selectId: Int) {
         val bnvMain = findViewById<LinearLayout>(R.id.bnv_main) ?: return
-
-
-        val bgColor = if (selectId == R.id.nav_customer) {
-            // 仅客服页：导航栏背景蓝
-           // resources.getColor(R.color.blue_500, theme)
-            resources.getColor(R.color.white, theme)
-        }
-        else {
-            // 其他页面（含个人中心）：导航栏背景默认白色
-            resources.getColor(R.color.white, theme)
-        }
-        bnvMain.setBackgroundColor(bgColor)
+        bnvMain.setBackgroundColor(resources.getColor(R.color.white, theme))
+        resetBottomNavStyle()
+        setSelectedNavItem(selectId)
+        setNavItemClickListener()
     }
 
     /**
      * 重置底部导航所有项为默认样式（灰色图标+灰色文字）
      */
     private fun resetBottomNavStyle() {
-        val bnvMain = findViewById<LinearLayout>(R.id.bnv_main) ?: return
-
-        // 服务项
-        findViewById<LinearLayout>(R.id.nav_service)?.apply {
-            findViewById<ImageView>(R.id.iv_service)?.setImageResource(R.drawable.bg9)
-            findViewById<TextView>(R.id.tv_nav_text1)?.setTextColor(resources.getColor(R.color.gray_600, theme))
-        }
-        // 客服项
-        findViewById< LinearLayout>(R.id.nav_customer)?.apply {
-            findViewById<ImageView>(R.id.iv_customer_service)?.setImageResource(R.drawable.bg16)
-            findViewById<TextView>(R.id.tv_nav_text2)?.setTextColor(resources.getColor(R.color.gray_600, theme))
-        }
-        // 联系项
-        findViewById<LinearLayout>(R.id.nav_contact)?.apply {
-            findViewById<ImageView>(R.id.iv_contact)?.setImageResource(R.drawable.bg11)
-            findViewById<TextView>(R.id.tv_nav_text3)?.setTextColor(resources.getColor(R.color.gray_600, theme))
-        }
-        // 我的项
-        findViewById<LinearLayout>(R.id.nav_mine)?.apply {
-            findViewById<ImageView>(R.id.iv_mine)?.setImageResource(R.drawable.bg12)
-            findViewById<TextView>(R.id.tv_nav_text4)?.setTextColor(resources.getColor(R.color.gray_600, theme))
+        navItems().forEach { item ->
+            item.container?.isSelected = false
+            item.icon?.apply {
+                setImageResource(item.defaultIconRes)
+                scaleType = ImageView.ScaleType.CENTER_INSIDE
+            }
+            item.label?.apply {
+                setTextColor(resources.getColor(R.color.gray_600, theme))
+                typeface = android.graphics.Typeface.DEFAULT
+            }
         }
     }
 
@@ -119,36 +78,15 @@ open class BaseActivity : AppCompatActivity() {
      * @param selectId 选中项的ID
      */
     private fun setSelectedNavItem(selectId: Int) {
-        val bnvMain = findViewById<LinearLayout>(R.id.bnv_main) ?: return
-
-        when (selectId) {
-            R.id.nav_service -> {
-                // 服务页：仅服务项变蓝
-                findViewById<LinearLayout>(R.id.nav_service)?.apply {
-                    findViewById<ImageView>(R.id.iv_service)?.setImageResource(R.drawable.bg9) // 有选中态图标则替换为bg9_selected
-                   // findViewById<TextView>(R.id.tv_nav_text1)?.setTextColor(resources.getColor(R.color.blue_500, theme))
-                }
+        navItems().firstOrNull { it.containerId == selectId }?.let { item ->
+            item.container?.isSelected = true
+            item.icon?.apply {
+                setImageResource(item.selectedIconRes)
+                scaleType = ImageView.ScaleType.FIT_CENTER
             }
-            R.id.nav_customer -> {
-                // 客服页：仅客服项变蓝（背景已单独设置为蓝）
-                findViewById<LinearLayout>(R.id.nav_customer)?.apply {
-                    findViewById<ImageView>(R.id.iv_customer_service)?.setImageResource(R.drawable.bg16) // 有选中态图标则替换为bg16_selected
-                    findViewById<TextView>(R.id.tv_nav_text2)?.setTextColor(resources.getColor(R.color.blue_500, theme))
-                }
-            }
-            R.id.nav_contact -> {
-                // 联系页：仅联系项变蓝
-                findViewById<LinearLayout>(R.id.nav_contact)?.apply {
-                    findViewById<ImageView>(R.id.iv_contact)?.setImageResource(R.drawable.bg11) // 有选中态图标则替换为bg11_selected
-                    //findViewById<TextView>(R.id.tv_nav_text3)?.setTextColor(resources.getColor(R.color.blue_500, theme))
-                }
-            }
-            R.id.nav_mine -> {
-                // 个人中心页：仅“我的”项变蓝，其他项保持灰色
-                findViewById<LinearLayout>(R.id.nav_mine)?.apply {
-                    findViewById<ImageView>(R.id.iv_mine)?.setImageResource(R.drawable.bg12) // 有选中态图标则替换为bg12_selected
-                  //  findViewById<TextView>(R.id.tv_nav_text4)?.setTextColor(resources.getColor(R.color.blue_500, theme))
-                }
+            item.label?.apply {
+                setTextColor(resources.getColor(R.color.blue_500, theme))
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
             }
         }
     }
@@ -196,4 +134,50 @@ open class BaseActivity : AppCompatActivity() {
         startActivity(Intent(this, clazz))
         finish() // 关闭当前页，避免返回栈堆积
     }
+
+    private fun navItems(): List<NavItem> {
+        return listOf(
+            NavItem(
+                containerId = R.id.nav_service,
+                container = findViewById(R.id.nav_service),
+                icon = findViewById(R.id.iv_service),
+                label = findViewById(R.id.tv_nav_text1),
+                defaultIconRes = R.drawable.bg9,
+                selectedIconRes = R.drawable.nav_service_selected
+            ),
+            NavItem(
+                containerId = R.id.nav_customer,
+                container = findViewById(R.id.nav_customer),
+                icon = findViewById(R.id.iv_customer_service),
+                label = findViewById(R.id.tv_nav_text2),
+                defaultIconRes = R.drawable.bg16,
+                selectedIconRes = R.drawable.nav_customer_selected
+            ),
+            NavItem(
+                containerId = R.id.nav_contact,
+                container = findViewById(R.id.nav_contact),
+                icon = findViewById(R.id.iv_contact),
+                label = findViewById(R.id.tv_nav_text3),
+                defaultIconRes = R.drawable.bg11,
+                selectedIconRes = R.drawable.nav_contact_selected
+            ),
+            NavItem(
+                containerId = R.id.nav_mine,
+                container = findViewById(R.id.nav_mine),
+                icon = findViewById(R.id.iv_mine),
+                label = findViewById(R.id.tv_nav_text4),
+                defaultIconRes = R.drawable.bg12,
+                selectedIconRes = R.drawable.nav_mine_selected
+            )
+        )
+    }
+
+    private data class NavItem(
+        val containerId: Int,
+        val container: LinearLayout?,
+        val icon: ImageView?,
+        val label: TextView?,
+        val defaultIconRes: Int,
+        val selectedIconRes: Int
+    )
 }

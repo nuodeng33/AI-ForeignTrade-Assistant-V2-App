@@ -20,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="个人中心"
+            android:text="@string/title_mine"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:gravity="center"/>
@@ -127,7 +127,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="本月咨询"
+                        android:text="@string/month_orders"
                         android:textSize="14sp"
                         android:textColor="@color/gray_600"
                         android:layout_marginTop="4dp"/>
@@ -152,7 +152,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="进行中订单"
+                        android:text="@string/ongoing_orders"
                         android:textSize="14sp"
                         android:textColor="@color/gray_600"
                         android:layout_marginTop="4dp"/>
@@ -174,7 +174,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="咨询类型统计"
+                    android:text="@string/order_status_statistics"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:layout_marginBottom="8dp"/>
@@ -200,7 +200,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="服务管理"
+                    android:text="@string/service_management"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_marginBottom="16dp"/>
@@ -224,7 +224,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="我的订单"
+                        android:text="@string/order_list_entry"
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         android:layout_marginStart="16dp"/>
@@ -232,7 +232,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="查看所有服务订单状态"
+                        android:text="@string/order_list_entry_desc"
                         android:textSize="14sp"
                         android:textColor="@color/gray_600"
                         android:layout_marginEnd="16dp"/>

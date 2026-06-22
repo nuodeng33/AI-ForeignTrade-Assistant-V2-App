@@ -12,8 +12,6 @@ class ServiceActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service)
 
-        initBottomNav(R.id.tv_nav_text1)
-
         try {
             // 1. 初始化标题栏、底部导航
             initTitleBar("我们的服务", showSetting = true)
