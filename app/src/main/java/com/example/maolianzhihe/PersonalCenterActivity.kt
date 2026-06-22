@@ -1,8 +1,6 @@
 package com.example.maolianzhihe
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -12,7 +10,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.maolianzhihe.data.local.SessionManager
@@ -38,8 +35,6 @@ class PersonalCenterActivity : BaseActivity() {
         private val NAV_CONTACT = R.id.nav_contact
         private val NAV_MINE = R.id.nav_mine
 
-        // 权限请求码
-        private const val PERMISSION_REQUEST_CODE = 100
         // 相册选择请求码
         private const val GALLERY_REQUEST_CODE = 101
     }
@@ -113,7 +108,7 @@ class PersonalCenterActivity : BaseActivity() {
      */
     private fun bindAvatarClick() {
         ivAvatar.setOnClickListener {
-            checkPermissionAndOpenGallery()
+            openGallery()
         }
     }
 
@@ -237,49 +232,12 @@ class PersonalCenterActivity : BaseActivity() {
     }
 
     /**
-     * 检查权限并打开相册
-     */
-    private fun checkPermissionAndOpenGallery() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                PERMISSION_REQUEST_CODE
-            )
-        } else {
-            openGallery()
-        }
-    }
-
-    /**
      * 打开系统相册
      */
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
-    }
-
-    /**
-     * 权限申请结果回调
-     */
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery()
-            } else {
-                Toast.makeText(this, "需要存储权限才能选择图片", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     /**
