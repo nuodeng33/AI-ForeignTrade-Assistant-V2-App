@@ -20,18 +20,18 @@
         android:clickable="true">
         <ImageView
             android:id="@+id/iv_service"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/bg9"
-            android:contentDescription="服务"/>
+            android:contentDescription="@string/title_service"/>
         <TextView
             android:id="@+id/tv_nav_text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="服务"
+            android:text="@string/nav_service"
             android:textSize="12sp"
             android:textColor="@color/gray_600"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="2dp"/>
     </LinearLayout>
 
     <!-- 客服 -->
@@ -45,18 +45,18 @@
         android:clickable="true">
         <ImageView
             android:id="@+id/iv_customer_service"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/bg16"
-            android:contentDescription="客服"/>
+            android:contentDescription="@string/nav_customer"/>
         <TextView
             android:id="@+id/tv_nav_text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="客服"
+            android:text="@string/nav_customer"
             android:textSize="12sp"
             android:textColor="@color/gray_600"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="2dp"/>
     </LinearLayout>
 
     <!-- 联系 -->
@@ -70,18 +70,18 @@
         android:clickable="true">
         <ImageView
             android:id="@+id/iv_contact"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/bg11"
-            android:contentDescription="联系"/>
+            android:contentDescription="@string/nav_contact"/>
         <TextView
             android:id="@+id/tv_nav_text3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="联系"
+            android:text="@string/nav_contact"
             android:textSize="12sp"
             android:textColor="@color/gray_600"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="2dp"/>
     </LinearLayout>
 
     <!-- 我的 -->
@@ -95,18 +95,18 @@
         android:clickable="true">
         <ImageView
             android:id="@+id/iv_mine"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/bg12"
-            android:contentDescription="我的"/>
+            android:contentDescription="@string/nav_mine"/>
         <TextView
             android:id="@+id/tv_nav_text4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我的"
+            android:text="@string/nav_mine"
             android:textSize="12sp"
             android:textColor="@color/gray_600"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="2dp"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_100"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,13 +16,14 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="16dp"
             android:adjustViewBounds="true"
             android:clickable="true"
-            android:contentDescription="返回"
+            android:contentDescription="@string/ui_back"
             android:focusable="true"
             android:scaleType="fitCenter"
             android:src="@drawable/bg17"
@@ -32,14 +34,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="我的订单"
+            android:text="@string/ui_orders"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_create_order"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="wrap_content"
+                android:minHeight="48dp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="12dp"
             android:background="@drawable/shape_create_order_btn"
@@ -47,18 +50,19 @@
             android:focusable="true"
             android:gravity="center"
             android:paddingHorizontal="16dp"
-            android:text="创建订单"
+            android:text="@string/ui_create"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/iv_setting"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
             android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
             android:clickable="true"
-            android:contentDescription="设置"
+            android:contentDescription="@string/ui_settings"
             android:focusable="true"
             android:scaleType="fitCenter"
             android:src="@drawable/bg25" />
@@ -66,8 +70,121 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_dashboard_header"
+        android:orientation="vertical"
+        android:layout_margin="16dp"
+        android:padding="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ui_dashboard"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/ui_dashboard_desc"
+            android:textColor="@color/white_80"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_blue_chip"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_total_orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/blue_900"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ui_all"
+                    android:textColor="@color/blue_900"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_blue_chip"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_processing_orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/blue_900"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ui_processing"
+                    android:textColor="@color/blue_900"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_blue_chip"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_attention_orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/blue_900"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ui_attention"
+                    android:textColor="@color/blue_900"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/white"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/shape_dashboard_card"
         android:elevation="2dp"
         android:orientation="horizontal">
 
@@ -78,9 +195,10 @@
             android:layout_weight="1"
             android:background="@drawable/shape_edittext"
             android:gravity="center"
-            android:text="全部订单"
+            android:text="@string/ui_all"
             android:textColor="@color/primary"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_unpaid"
@@ -88,7 +206,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="待付款"
+            android:text="@string/ui_unpaid"
             android:textColor="@color/gray_400"
             android:textSize="14sp" />
 
@@ -98,7 +216,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="待发货"
+            android:text="@string/ui_unshipped"
             android:textColor="@color/gray_400"
             android:textSize="14sp" />
 
@@ -108,7 +226,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="已完成"
+            android:text="@string/ui_completed"
             android:textColor="@color/gray_400"
             android:textSize="14sp" />
     </LinearLayout>
@@ -133,16 +251,54 @@
             android:layout_gravity="center"
             android:visibility="gone" />
 
-        <TextView
+        <LinearLayout
             android:id="@+id/tv_order_empty"
-            android:layout_width="wrap_content"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/shape_dashboard_card"
             android:gravity="center"
-            android:text="暂无订单"
-            android:textColor="@color/gray_600"
-            android:textSize="15sp"
-            android:visibility="gone" />
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/shape_blue_chip"
+                android:gravity="center"
+                android:text="@string/ui_badge"
+                android:textColor="@color/blue_700"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_order_empty_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:text="@string/ui_empty"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_order_empty_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="@string/ui_empty_hint"
+                android:textColor="@color/gray_600"
+                android:textSize="13sp" />
+            <Button
+                android:id="@+id/btn_order_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="@string/ui_retry" />
+        </LinearLayout>
     </FrameLayout>
 
 </LinearLayout>

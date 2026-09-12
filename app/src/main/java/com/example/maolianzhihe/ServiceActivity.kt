@@ -12,11 +12,9 @@ class ServiceActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service)
 
-        initBottomNav(R.id.tv_nav_text1)
-
         try {
             // 1. 初始化标题栏、底部导航
-            initTitleBar("我们的服务", showSetting = true)
+            initTitleBar(getString(R.string.ui_workbench), showSetting = true)
             initBottomNav(R.id.nav_service)
 
             // 2. 设置按钮跳转逻辑
@@ -48,10 +46,8 @@ class ServiceActivity : BaseActivity() {
             // 5. 物流解决方案-卡片整体点击 → 跳物流详情页（查配送信息）
             val llLogisticsCard = findViewById<LinearLayout>(R.id.ll_logistics_card)
             llLogisticsCard.setOnClickListener {
-                val intent = Intent(this, LogisticsDetailActivity::class.java)
-                intent.putExtra("ORDER_ID", "LOG20251215001") // 传递订单ID
+                val intent = Intent(this, MyOrderActivity::class.java)
                 startActivity(intent)
-                Toast.makeText(this, "查看物流配送信息", Toast.LENGTH_SHORT).show()
             }
 
             // 6. 物流解决方案-查看详情按钮 → 跳WebView网址

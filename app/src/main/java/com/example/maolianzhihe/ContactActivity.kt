@@ -10,7 +10,6 @@ class ContactActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact)
-        initBottomNav(R.id.tv_nav_text3)
 
         try {
             initTitleBar("联系我们", showSetting = true)

@@ -31,7 +31,11 @@ class MyOrderActivity : BaseActivity() {
     private lateinit var tvUnshipped: TextView
     private lateinit var tvCompleted: TextView
     private lateinit var tvCreateOrder: TextView
-    private lateinit var tvOrderEmpty: TextView
+    private lateinit var tvOrderEmpty: View
+    private lateinit var tvOrderEmptyMessage: TextView
+    private lateinit var tvTotalOrders: TextView
+    private lateinit var tvProcessingOrders: TextView
+    private lateinit var tvAttentionOrders: TextView
     private lateinit var ivBack: ImageView
     private lateinit var progressOrders: ProgressBar
     private lateinit var rvOrders: RecyclerView
@@ -40,6 +44,8 @@ class MyOrderActivity : BaseActivity() {
 
     private val orderList = mutableListOf<Order>()
     private var selectedTabIndex = 0
+    private var loadError: String? = null
+    private var ordersLoading = false
 
     private val requestCodeCreateOrder = 1001
 
@@ -68,6 +74,10 @@ class MyOrderActivity : BaseActivity() {
         tvUnshipped = findViewById(R.id.tv_unshipped)
         tvCompleted = findViewById(R.id.tv_completed)
         tvOrderEmpty = findViewById(R.id.tv_order_empty)
+        tvOrderEmptyMessage = findViewById(R.id.tv_order_empty_message)
+        tvTotalOrders = findViewById(R.id.tv_total_orders)
+        tvProcessingOrders = findViewById(R.id.tv_processing_orders)
+        tvAttentionOrders = findViewById(R.id.tv_attention_orders)
         progressOrders = findViewById(R.id.progress_orders)
         rvOrders = findViewById(R.id.rv_orders)
     }
@@ -87,12 +97,16 @@ class MyOrderActivity : BaseActivity() {
                 UiState.Loading -> showLoadingState()
                 is UiState.Success -> {
                     progressOrders.visibility = View.GONE
+                    ordersLoading = false
+                    loadError = null
                     orderList.clear()
                     orderList.addAll(state.data)
                     refreshOrderListUI()
                 }
                 is UiState.Empty -> {
                     progressOrders.visibility = View.GONE
+                    ordersLoading = false
+                    loadError = null
                     orderList.clear()
                     refreshOrderListUI(state.message)
                 }
@@ -105,12 +119,10 @@ class MyOrderActivity : BaseActivity() {
         progressOrders.visibility = View.GONE
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
-        if (BuildConfig.USE_MOCK_ORDER_FALLBACK) {
-            loadDefaultOrders()
-        } else {
-            orderList.clear()
-            refreshOrderListUI(message)
-        }
+        ordersLoading = false
+        loadError = message
+        orderList.clear()
+        refreshOrderListUI()
     }
 
     private fun observeDeleteOrderState() {
@@ -132,7 +144,10 @@ class MyOrderActivity : BaseActivity() {
     }
 
     private fun showLoadingState() {
+        ordersLoading = true
+        loadError = null
         progressOrders.visibility = View.VISIBLE
+        listOf(tvTotalOrders, tvProcessingOrders, tvAttentionOrders).forEach { it.text = "..." }
         tvOrderEmpty.visibility = View.GONE
         rvOrders.visibility = View.VISIBLE
     }
@@ -174,13 +189,40 @@ class MyOrderActivity : BaseActivity() {
         refreshOrderListUI()
     }
 
-    private fun refreshOrderListUI(emptyMessage: String = "暂无订单") {
+    private fun refreshOrderListUI(emptyMessage: String = "") {
+        if (ordersLoading) return
+        updateDashboardMetrics()
         val displayOrders = filteredOrders()
         orderAdapter.submitList(displayOrders)
         val isEmpty = displayOrders.isEmpty()
         rvOrders.visibility = if (isEmpty) View.GONE else View.VISIBLE
         tvOrderEmpty.visibility = if (isEmpty) View.VISIBLE else View.GONE
-        tvOrderEmpty.text = emptyMessage
+        val failed = loadError != null
+        tvOrderEmptyMessage.setText(if (failed) R.string.ui_load_failed else if (selectedTabIndex != 0) R.string.ui_filter_empty else R.string.ui_empty)
+        findViewById<TextView>(R.id.tv_order_empty_hint).setText(
+            if (failed) R.string.ui_error_hint else if (selectedTabIndex != 0) R.string.ui_filter_hint else R.string.ui_empty_hint
+        )
+        findViewById<android.widget.Button>(R.id.btn_order_state).apply {
+            setText(if (failed) R.string.ui_retry else if (selectedTabIndex != 0) R.string.ui_show_all else R.string.ui_create)
+            setOnClickListener {
+                if (failed) orderViewModel.loadOrders()
+                else if (selectedTabIndex != 0) selectTab(0)
+                else tvCreateOrder.performClick()
+            }
+        }
+        if (failed) listOf(tvTotalOrders, tvProcessingOrders, tvAttentionOrders).forEach { it.text = "--" }
+    }
+
+    private fun updateDashboardMetrics() {
+        val processingCount = orderList.count { order ->
+            order.status.contains("待发") || order.status.contains("运输")
+        }
+        val attentionCount = orderList.count { order ->
+            order.status.contains("待付") || order.status.contains("未付") || order.status.contains("待发")
+        }
+        tvTotalOrders.text = orderList.size.toString()
+        tvProcessingOrders.text = processingCount.toString()
+        tvAttentionOrders.text = attentionCount.toString()
     }
 
     private fun filteredOrders(): List<Order> {
@@ -317,6 +359,7 @@ class MyOrderActivity : BaseActivity() {
     private fun updateTabStyle(tv: TextView) {
         tv.setTextColor(ContextCompat.getColor(this, R.color.primary))
         tv.setBackgroundResource(R.drawable.shape_edittext)
+        tv.setTypeface(null, android.graphics.Typeface.BOLD)
     }
 
     private fun resetTabs() {
@@ -324,6 +367,7 @@ class MyOrderActivity : BaseActivity() {
         listOf(tvAll, tvUnpaid, tvUnshipped, tvCompleted).forEach { tab ->
             tab.setTextColor(grayColor)
             tab.setBackgroundResource(0)
+            tab.setTypeface(null, android.graphics.Typeface.NORMAL)
         }
     }
 

@@ -2,73 +2,122 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:background="@drawable/shape_edittext"
+    android:layout_marginBottom="14dp"
+    android:background="@drawable/shape_dashboard_card"
     android:clickable="true"
+    android:elevation="2dp"
     android:focusable="true"
-    android:minHeight="116dp"
-    android:orientation="horizontal"
+    android:minHeight="156dp"
+    android:orientation="vertical"
     android:padding="16dp">
 
-    <ImageView
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/bg24"
-        android:contentDescription="订单图标"
-        android:scaleType="centerCrop" />
-
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="14dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_order_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tv_order_no"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/gray_600"
-            android:textSize="12sp" />
+            android:id="@+id/tv_order_stage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_blue_chip"
+            android:gravity="center"
+            android:text="@string/ui_inquiry"
+            android:textColor="@color/blue_700"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_order_time"
-                android:layout_width="0dp"
+                android:id="@+id/tv_order_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/gray_400"
-                android:textSize="12sp" />
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_order_status"
+                android:id="@+id/tv_order_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/gray_600"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:background="@drawable/shape_order_status_chip"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:textColor="@color/orange"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_order_route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/shape_blue_chip"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="9dp"
+        android:text="@string/ui_old_route"
+        android:textColor="@color/blue_900"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:textColor="@color/orange"
-                android:textSize="14sp" />
+                android:text="@string/ui_next"
+                android:textColor="@color/gray_400"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tv_order_next_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_order_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/gray_400"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>
