@@ -111,4 +111,18 @@
     <string name="ui_inquiry">询</string>
     <string name="ui_old_route">中国仓库 -> 海外客户</string>
     <string name="ui_next">下一步</string>
+    <string name="ui_stage_pay">款</string>
+    <string name="ui_stage_ship">仓</string>
+    <string name="ui_stage_transit">运</string>
+    <string name="ui_stage_done">达</string>
+    <string name="ui_pending">待处理</string>
+    <string name="ui_default_order">外贸服务订单</string>
+    <string name="ui_missing_number">暂无单号</string>
+    <string name="ui_missing_time">暂无时间</string>
+    <string name="ui_number">订单号 %1$s</string>
+    <string name="ui_next_pay">跟进付款并确认发货排期</string>
+    <string name="ui_next_ship">准备报关资料并安排承运商</string>
+    <string name="ui_next_transit">同步物流节点给海外客户</string>
+    <string name="ui_next_done">归档订单并沉淀复购跟进</string>
+    <string name="ui_next_other">核对订单信息并推进下一环节</string>
 </resources>
