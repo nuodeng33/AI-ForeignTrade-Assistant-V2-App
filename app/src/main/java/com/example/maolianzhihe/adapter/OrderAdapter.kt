@@ -41,7 +41,7 @@ class OrderAdapter(
             tvOrderStage.text = stageLabel(status)
             tvOrderName.text = order.goodsInfo.ifBlank { "外贸服务订单" }
             tvOrderNo.text = "订单号 ${order.orderNumber.ifBlank { "暂无单号" }}"
-            tvOrderRoute.text = routeSummary(order)
+            tvOrderRoute.setText(R.string.ui_route_unavailable)
             tvOrderNextAction.text = nextAction(status)
             tvOrderTime.text = order.createdAt.ifBlank { order.createTime ?: "暂无时间" }
             tvOrderStatus.text = status
@@ -67,11 +67,6 @@ class OrderAdapter(
                 status.contains("完成") -> "归档订单并沉淀复购跟进"
                 else -> "核对订单信息并推进下一环节"
             }
-        }
-
-        private fun routeSummary(order: Order): String {
-            val trackingNumber = order.orderNumber.ifBlank { "待分配" }
-            return "中国仓库 -> 海外客户 · 物流单 $trackingNumber"
         }
 
         private fun statusColor(status: String): Int {
