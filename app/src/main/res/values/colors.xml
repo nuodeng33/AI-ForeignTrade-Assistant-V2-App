@@ -18,6 +18,14 @@
     <!-- 图标/按钮蓝色 -->
     <color name="blue_500">#2196F3</color>
     <color name="blue_700">#1976D2</color>
+    <color name="blue_50">#EAF4FF</color>
+    <color name="blue_100">#D6EAFF</color>
+    <color name="blue_900">#0D47A1</color>
+    <color name="teal_50">#E8F8F6</color>
+    <color name="green_50">#EAF8EF</color>
+    <color name="orange_50">#FFF4E5</color>
+    <color name="red_50">#FFF0F0</color>
+    <color name="card_shadow_tint">#14000000</color>
     <!-- 半透明黑色（50%透明度） -->
     <!-- 退出登录红色 -->
     <color name="red_500">#FF3B30</color>
