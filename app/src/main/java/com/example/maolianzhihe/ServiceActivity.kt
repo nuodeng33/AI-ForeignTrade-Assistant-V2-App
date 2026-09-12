@@ -14,7 +14,7 @@ class ServiceActivity : BaseActivity() {
 
         try {
             // 1. 初始化标题栏、底部导航
-            initTitleBar("我们的服务", showSetting = true)
+            initTitleBar(getString(R.string.ui_workbench), showSetting = true)
             initBottomNav(R.id.nav_service)
 
             // 2. 设置按钮跳转逻辑
