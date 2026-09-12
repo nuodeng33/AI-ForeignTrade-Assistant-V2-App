@@ -31,7 +31,11 @@ class MyOrderActivity : BaseActivity() {
     private lateinit var tvUnshipped: TextView
     private lateinit var tvCompleted: TextView
     private lateinit var tvCreateOrder: TextView
-    private lateinit var tvOrderEmpty: TextView
+    private lateinit var tvOrderEmpty: View
+    private lateinit var tvOrderEmptyMessage: TextView
+    private lateinit var tvTotalOrders: TextView
+    private lateinit var tvProcessingOrders: TextView
+    private lateinit var tvAttentionOrders: TextView
     private lateinit var ivBack: ImageView
     private lateinit var progressOrders: ProgressBar
     private lateinit var rvOrders: RecyclerView
@@ -68,6 +72,10 @@ class MyOrderActivity : BaseActivity() {
         tvUnshipped = findViewById(R.id.tv_unshipped)
         tvCompleted = findViewById(R.id.tv_completed)
         tvOrderEmpty = findViewById(R.id.tv_order_empty)
+        tvOrderEmptyMessage = findViewById(R.id.tv_order_empty_message)
+        tvTotalOrders = findViewById(R.id.tv_total_orders)
+        tvProcessingOrders = findViewById(R.id.tv_processing_orders)
+        tvAttentionOrders = findViewById(R.id.tv_attention_orders)
         progressOrders = findViewById(R.id.progress_orders)
         rvOrders = findViewById(R.id.rv_orders)
     }
@@ -175,12 +183,25 @@ class MyOrderActivity : BaseActivity() {
     }
 
     private fun refreshOrderListUI(emptyMessage: String = "暂无订单") {
+        updateDashboardMetrics()
         val displayOrders = filteredOrders()
         orderAdapter.submitList(displayOrders)
         val isEmpty = displayOrders.isEmpty()
         rvOrders.visibility = if (isEmpty) View.GONE else View.VISIBLE
         tvOrderEmpty.visibility = if (isEmpty) View.VISIBLE else View.GONE
-        tvOrderEmpty.text = emptyMessage
+        tvOrderEmptyMessage.text = emptyMessage
+    }
+
+    private fun updateDashboardMetrics() {
+        val processingCount = orderList.count { order ->
+            order.status.contains("待发") || order.status.contains("运输")
+        }
+        val attentionCount = orderList.count { order ->
+            order.status.contains("待付") || order.status.contains("未付") || order.status.contains("待发")
+        }
+        tvTotalOrders.text = orderList.size.toString()
+        tvProcessingOrders.text = processingCount.toString()
+        tvAttentionOrders.text = attentionCount.toString()
     }
 
     private fun filteredOrders(): List<Order> {
@@ -317,6 +338,7 @@ class MyOrderActivity : BaseActivity() {
     private fun updateTabStyle(tv: TextView) {
         tv.setTextColor(ContextCompat.getColor(this, R.color.primary))
         tv.setBackgroundResource(R.drawable.shape_edittext)
+        tv.setTypeface(null, android.graphics.Typeface.BOLD)
     }
 
     private fun resetTabs() {
@@ -324,6 +346,7 @@ class MyOrderActivity : BaseActivity() {
         listOf(tvAll, tvUnpaid, tvUnshipped, tvCompleted).forEach { tab ->
             tab.setTextColor(grayColor)
             tab.setBackgroundResource(0)
+            tab.setTypeface(null, android.graphics.Typeface.NORMAL)
         }
     }
 
