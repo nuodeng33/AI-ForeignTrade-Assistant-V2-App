@@ -37,13 +37,13 @@ class OrderAdapter(
         private val tvOrderStatus: TextView = itemView.findViewById(R.id.tv_order_status)
 
         fun bind(order: Order) {
-            val status = order.status.ifBlank { "待处理" }
+            val status = order.status.ifBlank { itemView.context.getString(R.string.ui_pending) }
             tvOrderStage.text = stageLabel(status)
-            tvOrderName.text = order.goodsInfo.ifBlank { "外贸服务订单" }
-            tvOrderNo.text = "订单号 ${order.orderNumber.ifBlank { "暂无单号" }}"
+            tvOrderName.text = order.goodsInfo.ifBlank { itemView.context.getString(R.string.ui_default_order) }
+            tvOrderNo.text = itemView.context.getString(R.string.ui_number, order.orderNumber.ifBlank { itemView.context.getString(R.string.ui_missing_number) })
             tvOrderRoute.setText(R.string.ui_route_unavailable)
             tvOrderNextAction.text = nextAction(status)
-            tvOrderTime.text = order.createdAt.ifBlank { order.createTime ?: "暂无时间" }
+            tvOrderTime.text = order.createdAt.ifBlank { order.createTime ?: itemView.context.getString(R.string.ui_missing_time) }
             tvOrderStatus.text = status
             tvOrderStatus.setTextColor(ContextCompat.getColor(itemView.context, statusColor(status)))
             itemView.setOnClickListener { onOrderClick(order) }
@@ -51,21 +51,21 @@ class OrderAdapter(
 
         private fun stageLabel(status: String): String {
             return when {
-                status.contains("待付") || status.contains("未付") -> "款"
-                status.contains("待发") -> "仓"
-                status.contains("运输") -> "运"
-                status.contains("完成") -> "达"
-                else -> "单"
+                status.contains("待付") || status.contains("未付") -> itemView.context.getString(R.string.ui_stage_pay)
+                status.contains("待发") -> itemView.context.getString(R.string.ui_stage_ship)
+                status.contains("运输") -> itemView.context.getString(R.string.ui_stage_transit)
+                status.contains("完成") -> itemView.context.getString(R.string.ui_stage_done)
+                else -> itemView.context.getString(R.string.ui_badge)
             }
         }
 
         private fun nextAction(status: String): String {
             return when {
-                status.contains("待付") || status.contains("未付") -> "跟进付款并确认发货排期"
-                status.contains("待发") -> "准备报关资料并安排承运商"
-                status.contains("运输") -> "同步物流节点给海外客户"
-                status.contains("完成") -> "归档订单并沉淀复购跟进"
-                else -> "核对订单信息并推进下一环节"
+                status.contains("待付") || status.contains("未付") -> itemView.context.getString(R.string.ui_next_pay)
+                status.contains("待发") -> itemView.context.getString(R.string.ui_next_ship)
+                status.contains("运输") -> itemView.context.getString(R.string.ui_next_transit)
+                status.contains("完成") -> itemView.context.getString(R.string.ui_next_done)
+                else -> itemView.context.getString(R.string.ui_next_other)
             }
         }
 
