@@ -34,7 +34,7 @@ class CustomerServiceActivity : BaseActivity() {
         setContentView(binding.root)
         chatViewModel = ViewModelProvider(this)[ChatViewModel::class.java]
 
-        initTitleBar("智能客服", showBack = true, showSetting = true)
+        initTitleBar(getString(R.string.ui_chat), showBack = true, showSetting = true)
         setupChatList()
         setupInputArea()
         setupQuickQuestions()
@@ -74,10 +74,6 @@ class CustomerServiceActivity : BaseActivity() {
 
     private fun setupInputArea() {
         binding.ivSend.setOnClickListener { sendMessage() }
-        binding.etInput.setOnEditorActionListener { _, _, _ ->
-            sendMessage()
-            true
-        }
         binding.etInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -191,7 +187,7 @@ class CustomerServiceActivity : BaseActivity() {
 
     private fun enableInput() {
         binding.etInput.isEnabled = true
-        binding.etInput.hint = "输入您的问题..."
+        binding.etInput.hint = getString(R.string.ui_input)
         binding.ivSend.isEnabled = binding.etInput.text.toString().trim().isNotEmpty()
         binding.tvFee.isEnabled = true
         binding.tvSize.isEnabled = true
