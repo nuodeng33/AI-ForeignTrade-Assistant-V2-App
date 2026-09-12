@@ -16,13 +16,14 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="16dp"
             android:adjustViewBounds="true"
             android:clickable="true"
-            android:contentDescription="返回"
+            android:contentDescription="@string/ui_back"
             android:focusable="true"
             android:scaleType="fitCenter"
             android:src="@drawable/bg17"
@@ -33,14 +34,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="我的订单"
+            android:text="@string/ui_orders"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_create_order"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="wrap_content"
+                android:minHeight="48dp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="12dp"
             android:background="@drawable/shape_create_order_btn"
@@ -48,18 +50,19 @@
             android:focusable="true"
             android:gravity="center"
             android:paddingHorizontal="16dp"
-            android:text="创建订单"
+            android:text="@string/ui_create"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/iv_setting"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
             android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
             android:clickable="true"
-            android:contentDescription="设置"
+            android:contentDescription="@string/ui_settings"
             android:focusable="true"
             android:scaleType="fitCenter"
             android:src="@drawable/bg25" />
@@ -76,7 +79,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="外贸订单工作台"
+            android:text="@string/ui_dashboard"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -85,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="跟进付款、发货、运输和交付，把每个订单推进到下一步。"
+            android:text="@string/ui_dashboard_desc"
             android:textColor="@color/white_80"
             android:textSize="13sp" />
 
@@ -97,7 +100,8 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_blue_chip"
@@ -116,14 +120,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="全部订单"
+                    android:text="@string/ui_all"
                     android:textColor="@color/blue_900"
                     android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_blue_chip"
@@ -142,14 +147,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="进行中"
+                    android:text="@string/ui_processing"
                     android:textColor="@color/blue_900"
                     android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_blue_chip"
                 android:gravity="center"
@@ -167,7 +173,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="需跟进"
+                    android:text="@string/ui_attention"
                     android:textColor="@color/blue_900"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -189,7 +195,7 @@
             android:layout_weight="1"
             android:background="@drawable/shape_edittext"
             android:gravity="center"
-            android:text="全部订单"
+            android:text="@string/ui_all"
             android:textColor="@color/primary"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -200,7 +206,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="待付款"
+            android:text="@string/ui_unpaid"
             android:textColor="@color/gray_400"
             android:textSize="14sp" />
 
@@ -210,7 +216,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="待发货"
+            android:text="@string/ui_unshipped"
             android:textColor="@color/gray_400"
             android:textSize="14sp" />
 
@@ -220,7 +226,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="已完成"
+            android:text="@string/ui_completed"
             android:textColor="@color/gray_400"
             android:textSize="14sp" />
     </LinearLayout>
@@ -261,7 +267,7 @@
                 android:layout_height="48dp"
                 android:background="@drawable/shape_blue_chip"
                 android:gravity="center"
-                android:text="单"
+                android:text="@string/ui_badge"
                 android:textColor="@color/blue_700"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -272,19 +278,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:gravity="center"
-                android:text="暂无订单"
+                android:text="@string/ui_empty"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_order_empty_hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center"
-                android:text="创建第一个外贸订单，开始跟进付款、发货和物流节点。"
+                android:text="@string/ui_empty_hint"
                 android:textColor="@color/gray_600"
                 android:textSize="13sp" />
+            <Button
+                android:id="@+id/btn_order_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="@string/ui_retry" />
         </LinearLayout>
     </FrameLayout>
 
