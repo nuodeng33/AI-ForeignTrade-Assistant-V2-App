@@ -111,4 +111,18 @@
     <string name="ui_inquiry">O</string>
     <string name="ui_old_route">Route information unavailable</string>
     <string name="ui_next">Suggested next step</string>
+    <string name="ui_stage_pay">P</string>
+    <string name="ui_stage_ship">S</string>
+    <string name="ui_stage_transit">T</string>
+    <string name="ui_stage_done">D</string>
+    <string name="ui_pending">Pending</string>
+    <string name="ui_default_order">Trade order</string>
+    <string name="ui_missing_number">Unavailable</string>
+    <string name="ui_missing_time">Time unavailable</string>
+    <string name="ui_number">Order %1$s</string>
+    <string name="ui_next_pay">Follow up on payment and shipping schedule</string>
+    <string name="ui_next_ship">Prepare documents and arrange shipping</string>
+    <string name="ui_next_transit">Share shipment updates with the customer</string>
+    <string name="ui_next_done">Archive the order and plan follow-up</string>
+    <string name="ui_next_other">Review order details and next steps</string>
 </resources>
