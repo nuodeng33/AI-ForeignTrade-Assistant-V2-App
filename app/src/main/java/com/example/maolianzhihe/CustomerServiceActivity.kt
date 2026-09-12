@@ -88,9 +88,9 @@ class CustomerServiceActivity : BaseActivity() {
     }
 
     private fun setupQuickQuestions() {
-        binding.tvFee.setOnClickListener { if (!isStreaming.get()) askQuickQuestion("如何计算报关费用？") }
-        binding.tvSize.setOnClickListener { if (!isStreaming.get()) askQuickQuestion("集装箱尺寸规格有哪些？") }
-        binding.tvContract.setOnClickListener { if (!isStreaming.get()) askQuickQuestion("外贸合同范本有哪些注意事项？") }
+        binding.tvFee.setOnClickListener { if (!isStreaming.get()) prepareTemplate(R.string.ui_email_template) }
+        binding.tvSize.setOnClickListener { if (!isStreaming.get()) prepareTemplate(R.string.ui_risk_template) }
+        binding.tvContract.setOnClickListener { if (!isStreaming.get()) prepareTemplate(R.string.ui_followup_template) }
     }
 
     private fun addWelcomeMessage() {
@@ -98,6 +98,12 @@ class CustomerServiceActivity : BaseActivity() {
         messages.add(ChatMessage("您好！我是外贸智能助手。我可以帮助您解答关于外贸流程、国际贸易术语、海关政策、单证制作等问题。请问有什么可以帮您的？", ChatType.TYPE_AI))
         chatAdapter.submitList(messages)
         scrollToBottom()
+    }
+
+    private fun prepareTemplate(template: Int) {
+        binding.etInput.setText(getString(template))
+        binding.etInput.requestFocus()
+        binding.etInput.setSelection(binding.etInput.text.length)
     }
 
     private fun askQuickQuestion(question: String) {
